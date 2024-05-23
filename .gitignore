@@ -1,0 +1,67 @@
+# Ignorar archivos y carpetas generados por Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyo
+*.pyd
+
+# Archivos de configuración de entornos virtuales
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Archivos de registro
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Archivos de configuración de VS Code
+.vscode/
+
+# Archivos de configuración de Jupyter Notebook
+.ipynb_checkpoints/
+
+# Archivos generados por sistemas operativos
+.DS_Store
+
+# Ignorar archivos de bases de datos SQLite
+*.sqlite3
+
+# Ignorar archivos de configuración de cobertura de código
+.coverage
+.coverage.*
+
+# Ignorar informes de cobertura de código
+htmlcov/
+
+# Ignorar directorios de pruebas
+.tox/
+.nox/
+
+# Ignorar resultados de pruebas
+coverage.xml
+*.cover
+.hypothesis/
+
+# Ignorar archivos de configuración de pytest
+.pytest_cache/
+
+# Ignorar archivos de documentación
+docs/_build/
+
+# Ignorar archivos de configuración de MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ignorar archivos de configuración de Pylint
+.pylint.d/

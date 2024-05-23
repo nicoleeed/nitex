@@ -1,0 +1,670 @@
+ ~/Documents/2024-1/Compiladores/Proyecto Compilador ----------------------------------------------------------------------------------------------- compiladores py 
+> python3 compiler.py
+
+ ██████╗ ██████╗ ███╗   ███╗██████╗ ██╗██╗      █████╗ ██████╗  ██████╗ ██████╗ ███████╗███████╗    ██████╗  ██████╗ ██████╗ ██╗  ██╗       ██╗
+██╔════╝██╔═══██╗████╗ ████║██╔══██╗██║██║     ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔════╝██╔════╝    ╚════██╗██╔═████╗╚════██╗██║  ██║      ███║
+██║     ██║   ██║██╔████╔██║██████╔╝██║██║     ███████║██║  ██║██║   ██║██████╔╝█████╗  ███████╗     █████╔╝██║██╔██║ █████╔╝███████║█████╗╚██║
+██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██║██║     ██╔══██║██║  ██║██║   ██║██╔══██╗██╔══╝  ╚════██║    ██╔═══╝ ████╔╝██║██╔═══╝ ╚════██║╚════╝ ██║
+╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║███████╗██║  ██║██████╔╝╚██████╔╝██║  ██║███████╗███████║    ███████╗╚██████╔╝███████╗     ██║       ██║
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝    ╚══════╝ ╚═════╝ ╚══════╝     ╚═╝       ╚═╝
+ 
+╔═╗╦═╗╔═╗╔╦╗╦ ╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
+╠═╝╠╦╝║ ║ ║║║ ║║   ║ ║║ ║║║║╚═╗
+╩  ╩╚═╚═╝═╩╝╚═╝╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
+0  G -> C
+1  C -> TEXT C
+2  C -> NLIST C
+3  C -> LIST C
+4  C -> NL C
+5  C -> STEXT C
+6  C -> vacio
+7  TM -> ALPHANUM TM1
+8  TM -> STEXT TM1
+9  TM1 -> TM
+10 TM1 -> vacio
+11 TEXT -> /p BLCO TM BLCC
+12 TEXT -> /t1 BLCO TM BLCC
+13 TEXT -> /t2 BLCO TM BLCC
+14 TEXT -> /t3 BLCO TM BLCC
+15 TEXT -> /url BLCO TM BLCC
+16 TEXT -> /img BLCO TM BLCC
+17 STEXT -> /b BLCO TM BLCC
+18 STEXT -> /i BLCO TM BLCC
+19 STEXT -> /u BLCO TM BLCC
+20 ITEML -> BLCO TM BLCC ITEML1
+21 ITEML1 -> , ITEML
+22 ITEML1 -> vacio
+23 LIST -> /l BLCO ITEML BLCC
+24 NLIST -> /sl BLCO ITEML BLCC
+25 NL -> /n
+26 BLCO -> {
+27 BLCC -> }
+28 CHAR -> PLAIN_TEXT
+29 ALPHANUM -> CHAR
+30 ALPHANUM -> DIGIT
+31 DIGIT -> INT
+
+╔═╗╔═╗╦═╗╔═╗╦╔╗╔╔═╗  ╔╦╗╔═╗╔╗ ╦  ╔═╗
+╠═╝╠═╣╠╦╝╚═╗║║║║║ ╦   ║ ╠═╣╠╩╗║  ║╣ 
+╩  ╩ ╩╩╚═╚═╝╩╝╚╝╚═╝   ╩ ╩ ╩╚═╝╩═╝╚═╝
+(G,$) -> 0
+(G,/p) -> 0
+(G,/b) -> 0
+(G,/i) -> 0
+(G,/u) -> 0
+(G,/t1) -> 0
+(G,/t2) -> 0
+(G,/t3) -> 0
+(G,/url) -> 0
+(G,/img) -> 0
+(G,/sl) -> 0
+(G,/l) -> 0
+(G,/n) -> 0
+(C,$) -> 6
+(C,/p) -> 1
+(C,/b) -> 5
+(C,/i) -> 5
+(C,/u) -> 5
+(C,/t1) -> 1
+(C,/t2) -> 1
+(C,/t3) -> 1
+(C,/url) -> 1
+(C,/img) -> 1
+(C,/sl) -> 2
+(C,/l) -> 3
+(C,/n) -> 4
+(TM,/b) -> 8
+(TM,/i) -> 8
+(TM,/u) -> 8
+(TM,PLAIN_TEXT) -> 7
+(TM,INT) -> 7
+(TM1,$) -> 10
+(TM1,/b) -> 9
+(TM1,/i) -> 9
+(TM1,/u) -> 9
+(TM1,}) -> 10
+(TM1,PLAIN_TEXT) -> 9
+(TM1,INT) -> 9
+(TEXT,/p) -> 11
+(TEXT,/t1) -> 12
+(TEXT,/t2) -> 13
+(TEXT,/t3) -> 14
+(TEXT,/url) -> 15
+(TEXT,/img) -> 16
+(STEXT,/b) -> 17
+(STEXT,/i) -> 18
+(STEXT,/u) -> 19
+(ITEML,{) -> 20
+(ITEML1,$) -> 22
+(ITEML1,}) -> 22
+(ITEML1,,) -> 21
+(LIST,/l) -> 23
+(NLIST,/sl) -> 24
+(NL,/n) -> 25
+(BLCO,{) -> 26
+(BLCC,}) -> 27
+(ALPHANUM,PLAIN_TEXT) -> 28
+(ALPHANUM,INT) -> 29
+(CHAR, PLAIN_TEXT) -> 30
+(DIGIT, INT) -> 31
+
+╔╦╗╔═╗╦═╗╔╦╗╦╔╗╔╔═╗╦  ╔═╗
+ ║ ║╣ ╠╦╝║║║║║║║╠═╣║  ╚═╗
+ ╩ ╚═╝╩╚═╩ ╩╩╝╚╝╩ ╩╩═╝╚═╝
+/p
+/t1
+/t2
+/t3
+/url
+/img
+/b
+/i
+/u
+/l
+/sl
+,
+/n
+{
+}
+PLAIN_TEXT
+INT
+$
+
+╔═╗╔═╗╔═╗╔╗╔╔╗╔╔═╗╦═╗
+╚═╗║  ╠═╣║║║║║║║╣ ╠╦╝
+╚═╝╚═╝╩ ╩╝╚╝╝╚╝╚═╝╩╚═
+INFO SCAN - Start scanning
+============================================================================
+DEBUG SCAN - RESERVED_WORD "/t1" found at (1:3)
+DEBUG SCAN - BLCO "{" found at (1:4)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo" found at (1:11)
+DEBUG SCAN - BLCC "}" found at (1:12)
+DEBUG SCAN - RESERVED_WORD "/b" found at (2:4)
+DEBUG SCAN - BLCO "{" found at (2:5)
+DEBUG SCAN - PLAIN_TEXT "ejemplo" found at (2:12)
+DEBUG SCAN - PLAIN_TEXT "(bold)" found at (2:19)
+DEBUG SCAN - BLCC "}" found at (2:20)
+DEBUG SCAN - RESERVED_WORD "/i" found at (3:3)
+DEBUG SCAN - BLCO "{" found at (3:5)
+DEBUG SCAN - PLAIN_TEXT "ejemplo" found at (3:12)
+DEBUG SCAN - PLAIN_TEXT "(italic)" found at (3:21)
+DEBUG SCAN - BLCC "}" found at (3:22)
+DEBUG SCAN - RESERVED_WORD "/u" found at (4:3)
+DEBUG SCAN - BLCO "{" found at (4:4)
+DEBUG SCAN - PLAIN_TEXT "ejemplo" found at (4:11)
+DEBUG SCAN - PLAIN_TEXT "(underline)" found at (4:23)
+DEBUG SCAN - BLCC "}" found at (4:24)
+DEBUG SCAN - RESERVED_WORD "/p" found at (5:3)
+DEBUG SCAN - BLCO "{" found at (5:4)
+DEBUG SCAN - PLAIN_TEXT "Esto" found at (5:8)
+DEBUG SCAN - PLAIN_TEXT "es" found at (5:11)
+DEBUG SCAN - PLAIN_TEXT "un" found at (5:14)
+DEBUG SCAN - RESERVED_WORD "/b" found at (5:17)
+DEBUG SCAN - BLCO "{" found at (5:18)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo" found at (5:25)
+DEBUG SCAN - BLCC "}" found at (5:26)
+DEBUG SCAN - PLAIN_TEXT "de" found at (5:29)
+DEBUG SCAN - PLAIN_TEXT "texto" found at (5:35)
+DEBUG SCAN - PLAIN_TEXT "en" found at (5:38)
+DEBUG SCAN - RESERVED_WORD "/b" found at (5:41)
+DEBUG SCAN - BLCO "{" found at (5:42)
+DEBUG SCAN - RESERVED_WORD "/i" found at (5:44)
+DEBUG SCAN - BLCO "{" found at (5:45)
+DEBUG SCAN - PLAIN_TEXT "nuestro" found at (5:52)
+DEBUG SCAN - BLCC "}" found at (5:53)
+DEBUG SCAN - BLCC "}" found at (5:54)
+DEBUG SCAN - RESERVED_WORD "/u" found at (5:57)
+DEBUG SCAN - BLCO "{" found at (5:58)
+DEBUG SCAN - PLAIN_TEXT "lenguaje" found at (5:66)
+DEBUG SCAN - BLCC "}" found at (5:67)
+DEBUG SCAN - BLCC "}" found at (5:68)
+DEBUG SCAN - RESERVED_WORD "/t1" found at (6:4)
+DEBUG SCAN - BLCO "{" found at (6:5)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo" found at (6:13)
+DEBUG SCAN - PLAIN_TEXT "titulo1" found at (6:21)
+DEBUG SCAN - BLCC "}" found at (6:22)
+DEBUG SCAN - RESERVED_WORD "/t2" found at (7:4)
+DEBUG SCAN - BLCO "{" found at (7:5)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo" found at (7:13)
+DEBUG SCAN - PLAIN_TEXT "titulo1" found at (7:21)
+DEBUG SCAN - BLCC "}" found at (7:22)
+DEBUG SCAN - RESERVED_WORD "/t3" found at (8:4)
+DEBUG SCAN - BLCO "{" found at (8:5)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo" found at (8:13)
+DEBUG SCAN - PLAIN_TEXT "titulo1" found at (8:21)
+DEBUG SCAN - BLCC "}" found at (8:22)
+DEBUG SCAN - RESERVED_WORD "/url" found at (9:5)
+DEBUG SCAN - BLCO "{" found at (9:6)
+DEBUG SCAN - PLAIN_TEXT "ejemplo_url" found at (9:17)
+DEBUG SCAN - BLCC "}" found at (9:19)
+DEBUG SCAN - RESERVED_WORD "/img" found at (10:5)
+DEBUG SCAN - BLCO "{" found at (10:6)
+DEBUG SCAN - PLAIN_TEXT "ejemplo_img" found at (10:18)
+DEBUG SCAN - BLCC "}" found at (10:19)
+DEBUG SCAN - RESERVED_WORD "/l" found at (11:3616)
+DEBUG SCAN - BLCO "{" found at (11:3617)
+DEBUG SCAN - BLCO "{" found at (11:3618)
+DEBUG SCAN - PLAIN_TEXT "ejemplo" found at (11:3625)
+DEBUG SCAN - PLAIN_TEXT "lista" found at (11:3631)
+DEBUG SCAN - BLCC "}" found at (11:3632)
+DEBUG SCAN - SPC "," found at (11:3633)
+DEBUG SCAN - BLCO "{" found at (11:3635)
+DEBUG SCAN - RESERVED_WORD "/b" found at (11:3637)
+DEBUG SCAN - BLCO "{" found at (11:3638)
+DEBUG SCAN - PLAIN_TEXT "ejemplo" found at (11:3645)
+DEBUG SCAN - PLAIN_TEXT "lista(bold)" found at (11:3657)
+DEBUG SCAN - BLCC "}" found at (11:3658)
+DEBUG SCAN - BLCC "}" found at (11:3659)
+DEBUG SCAN - SPC "," found at (11:3660)
+DEBUG SCAN - BLCO "{" found at (11:3662)
+DEBUG SCAN - RESERVED_WORD "/u" found at (11:3664)
+DEBUG SCAN - BLCO "{" found at (11:3665)
+DEBUG SCAN - PLAIN_TEXT "ejemplo" found at (11:3672)
+DEBUG SCAN - PLAIN_TEXT "lista" found at (11:3678)
+DEBUG SCAN - PLAIN_TEXT "(underline)" found at (11:3690)
+DEBUG SCAN - BLCC "}" found at (11:3691)
+DEBUG SCAN - BLCC "}" found at (11:3693)
+DEBUG SCAN - BLCC "}" found at (11:3694)
+DEBUG SCAN - RESERVED_WORD "/sl" found at (12:4)
+DEBUG SCAN - BLCO "{" found at (12:5)
+DEBUG SCAN - BLCO "{" found at (12:6)
+DEBUG SCAN - PLAIN_TEXT "ejemplo" found at (12:13)
+DEBUG SCAN - PLAIN_TEXT "sl1" found at (12:17)
+DEBUG SCAN - BLCC "}" found at (12:18)
+DEBUG SCAN - BLCC "}" found at (12:19)
+============================================================================
+INFO SCAN - Completed with
+Error(s):  0
+============================================================================
+============================================================================
+
+╔╦╗╔═╗╦╔═╔═╗╔╗╔╔═╗
+ ║ ║ ║╠╩╗║╣ ║║║╚═╗
+ ╩ ╚═╝╩ ╩╚═╝╝╚╝╚═╝
+============================================================================
+/t1
+{
+PLAIN_TEXT
+}
+/b
+{
+PLAIN_TEXT
+PLAIN_TEXT
+}
+/i
+{
+PLAIN_TEXT
+PLAIN_TEXT
+}
+/u
+{
+PLAIN_TEXT
+PLAIN_TEXT
+}
+/p
+{
+PLAIN_TEXT
+PLAIN_TEXT
+PLAIN_TEXT
+/b
+{
+PLAIN_TEXT
+}
+PLAIN_TEXT
+PLAIN_TEXT
+PLAIN_TEXT
+/b
+{
+/i
+{
+PLAIN_TEXT
+}
+}
+/u
+{
+PLAIN_TEXT
+}
+}
+/t1
+{
+PLAIN_TEXT
+PLAIN_TEXT
+}
+/t2
+{
+PLAIN_TEXT
+PLAIN_TEXT
+}
+/t3
+{
+PLAIN_TEXT
+PLAIN_TEXT
+}
+/url
+{
+PLAIN_TEXT
+}
+/img
+{
+PLAIN_TEXT
+}
+/l
+{
+{
+PLAIN_TEXT
+PLAIN_TEXT
+}
+,
+{
+/b
+{
+PLAIN_TEXT
+PLAIN_TEXT
+}
+}
+,
+{
+/u
+{
+PLAIN_TEXT
+PLAIN_TEXT
+PLAIN_TEXT
+}
+}
+}
+/sl
+{
+{
+PLAIN_TEXT
+PLAIN_TEXT
+}
+}
+$
+============================================================================
+
+╔═╗╔═╗╦═╗╔═╗╔═╗╦═╗
+╠═╝╠═╣╠╦╝╚═╗║╣ ╠╦╝
+╩  ╩ ╩╩╚═╚═╝╚═╝╩╚═
+============================================================================
+Stack: ['$', '$', 'G']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/t1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'STEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/b']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'STEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/i']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'STEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/u']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/p']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'STEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/b']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', '}']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'STEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/b']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'STEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/i']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', '}']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', '}']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'STEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/u']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', '}']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/t1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/t2']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/t3']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/url']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/img']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'LIST']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', '/l']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/b']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/u']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'C', 'NLIST']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', '/sl']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack: ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack: ['$', '$', 'C', 'BLCC', 'vacio']
+Stack: ['$', '$', 'C', 'BLCC']
+Stack: ['$', '$', 'C', '}']
+Stack: ['$', '$', 'C']
+Stack: ['$', '$', 'vacio']
+Stack: ['$', '$']
+Stack: ['$']
+Success: Input successfully parsed!
+============================================================================
+
+ ~/Documents/2024-1/Compiladores/Proyecto Compilador ----------------------------------------------------------------------------------------------- compiladores py 
+> 

@@ -1,0 +1,2 @@
+/l{{ejemplo lista}, {/b{ejemplo lista(bold)}}, {/u{ejemplo lista (underline)}},}/n
+$

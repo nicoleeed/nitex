@@ -1,0 +1,18 @@
+nonterminal,first,follow,firstPlus
+G → C,ε '\p' '\b' '\i' '\u' '\t1' '\t2' '\t3' '\url' '\img' '\sl' '\l' '\n',$,ε '\p' '\b' '\i' '\u' '\t1' '\t2' '\t3' '\url' '\img' '\sl' '\l' '\n' $
+"C → (TEXT,C) | (NLIST,C) | (LIST,C) | (NL,C) | (STEXT,C) | ε",ε '\p' '\b' '\i' '\u' '\t1' '\t2' '\t3' '\url' '\img' '\sl' '\l' '\n',$,ε '\p' '\b' '\i' '\u' '\t1' '\t2' '\t3' '\url' '\img' '\sl' '\l' '\n' $
+"TM → (ALPHANUM,TM1) | (STEXT,TM1)",'PLAINTEXT' 'INT' '\b' '\i' '\u','}','PLAINTEXT' 'INT' '\b' '\i' '\u'
+TM1 → TM | ε,ε 'PLAINTEXT' 'INT' '\b' '\i' '\u','}',ε 'PLAINTEXT' 'INT' '\b' '}' '\i' '\u'
+"TEXT → ('\p',BLCO,TM,BLCC) | ('\t1',BLCO,TM,BLCC) | ('\t2',BLCO,TM,BLCC) | ('\t3',BLCO,TM,BLCC) | ('\url',BLCO,TM,BLCC) | ('\img',BLCO,TM,BLCC)",'\p' '\t1' '\t2' '\t3' '\url' '\img','\p' '\b' '\i' '\u' '\t1' '\t2' '\t3' '\url' '\img' '\sl' '\l' '\n' $,'\p' '\t1' '\t2' '\t3' '\url' '\img'
+"STEXT → ('\b',BLCO,TM,BLCC) | ('\i',BLCO,TM,BLCC) | ('\u',BLCO,TM,BLCC)",'\b' '\i' '\u','\p' 'PLAINTEXT' 'INT' '\b' '}' '\i' '\u' '\t1' '\t2' '\t3' '\url' '\img' '\sl' '\l' '\n' $,'\b' '\i' '\u'
+"ITEML → BLCO,TM,BLCC,ITEML1",'{','}','{'
+"ITEML1 → (SPC,ITEML) | ε","ε ','",'}',"ε '}' ','"
+"LIST → '\l',BLCO,ITEML,BLCC",'\l','\p' '\b' '\i' '\u' '\t1' '\t2' '\t3' '\url' '\img' '\sl' '\l' '\n' $,'\l'
+"NLIST → '\sl',BLCO,ITEML,BLCC",'\sl','\p' '\b' '\i' '\u' '\t1' '\t2' '\t3' '\url' '\img' '\sl' '\l' '\n' $,'\sl'
+NL → '\n','\n','\p' '\b' '\i' '\u' '\t1' '\t2' '\t3' '\url' '\img' '\sl' '\l' '\n' $,'\n'
+BLCO → '{','{','{' 'PLAINTEXT' 'INT' '\b' '\i' '\u','{'
+BLCC → '}','}',"'\p' 'PLAINTEXT' 'INT' '\b' '}' '\i' '\u' '\t1' '\t2' '\t3' '\url' '\img' '\sl' ',' '\l' '\n' $",'}'
+"SPC → ','","','",'{',"','"
+CHAR → 'PLAINTEXT','PLAINTEXT','PLAINTEXT' 'INT' '\b' '}' '\i' '\u','PLAINTEXT'
+ALPHANUM → CHAR | DIGIT,'PLAINTEXT' 'INT','PLAINTEXT' 'INT' '\b' '}' '\i' '\u','PLAINTEXT' 'INT'
+DIGIT → 'INT','INT','PLAINTEXT' 'INT' '\b' '}' '\i' '\u','INT'

@@ -1,0 +1,89 @@
+(G,$)->0
+(G,/p)->0
+(G,/b)->0
+(G,/i)->0
+(G,/u)->0
+(G,/t1)->0
+(G,/t2)->0
+(G,/t3)->0
+(G,/url)->0
+(G,/img)->0
+(G,/sl)->0
+(G,/l)->0
+(G,/tb)->0
+(G,/n)->0
+
+(C,$)->7
+(C,/p)->1
+(C,/b)->5
+(C,/i)->5
+(C,/u)->5
+(C,/t1)->1
+(C,/t2)->1
+(C,/t3)->1
+(C,/url)->1
+(C,/img)->1
+(C,/sl)->2
+(C,/l)->3
+(C,/n)->4
+(C,/tb)->6
+
+(TM,/b)->9
+(TM,/i)->9
+(TM,/u)->9
+(TM,PLAIN_TEXT)->8
+(TM,INT)->8
+
+(TM1,$)->11
+(TM1,/b)->10
+(TM1,/i)->10
+(TM1,/u)->10
+(TM1,})->11
+(TM1,PLAIN_TEXT)->10
+(TM1,INT)->10
+
+(TEXT,/p)->12
+(TEXT,/t1)->13
+(TEXT,/t2)->14
+(TEXT,/t3)->15
+(TEXT,/url)->16
+(TEXT,/img)->17
+
+(STEXT,/b)->18
+(STEXT,/i)->19
+(STEXT,/u)->20
+
+(ITEML,{)->21
+
+(ITEML1,$)->23
+(ITEML1,})->23
+(ITEML1,,)->22
+
+(LIST,/l)->24
+
+(NLIST,/sl)->25
+
+(NL,/n)->26
+
+(BLCO,{)->27
+
+(BLCC,})->28
+
+(ALPHANUM,PLAIN_TEXT)->29
+(ALPHANUM,INT)->30
+
+(CHAR,PLAIN_TEXT) ->31
+
+(DIGIT,INT) ->32
+
+(TB,/tb) -> 33
+
+(TBZ,() -> 36
+
+(BTO,[) -> 34
+
+(BTC,]) -> 35
+
+(PO,() -> 37
+
+(PC,)) -> 38

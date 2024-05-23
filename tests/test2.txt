@@ -1,0 +1,4 @@
+/t1{Ejemplo t1 /b{bold /u{underline} } }/n
+/t1{ Ejemplo titulo1}/n
+/l{{ejemplo lista}, {/b{ejemplo lista(bold)}}, {/u{ejemplo lista(underline)}} }/n
+$
