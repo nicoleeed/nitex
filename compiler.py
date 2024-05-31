@@ -1,6 +1,8 @@
 from colorama import Fore, Style
 from anytree import Node, RenderTree, PreOrderIter
 from tabulate import tabulate
+import re
+import pdfkit
 
 input_code = open('tests/test1.txt').read()
 grammar_file_path = 'grammar/LL1Grammar.txt'
@@ -285,13 +287,15 @@ def find_leaf_node(root, target_name):
                 continue
             last_found_node = node
     return last_found_node
-    
+data = []
 def print_preOrder_tree(root):
     for node in PreOrderIter(root):
         if node.name.startswith(("PLAIN_TEXT", "INT")):
             print(node.name)
+            data.append(node.name)
         elif node.name in terminal_symbols:
             print(node.name)
+            data.append(node.name)
 def preOrder_tree(root):
     for node in PreOrderIter(root):
         print(node.name)
@@ -428,7 +432,6 @@ def parsing(scaned_tokens):
                 for key in parse_table:
                     # Verifica si la clave comienza con el valor de top_of_stack
                     if key.startswith(f'({top_of_stack},'):
-                        # Si coincide, agrega la segunda parte del key a la lista
                         parse_errors.append(key.split(',')[1][:-1])
                 current_token += 1
                 continue
@@ -436,6 +439,149 @@ def parsing(scaned_tokens):
       
 
 print_presentation()
+def translate_to_html(data):
+    html_output = ""
+    tag_stack = []
+
+    # Diccionario de correspondencia entre etiquetas y HTML
+    tag_map = {
+        "/t1": "h1",
+        "/t2": "h2",
+        "/t3": "h3",
+        "/b": "b",
+        "/i": "i",
+        "/u": "u",
+        "/p": "p",
+        "/url": "a href=''",
+        "/img": "img src=''",
+        "/l": "ul",
+        "/sl": "ol",
+        "/tb": "table"
+    }
+
+    # Función para abrir una etiqueta HTML
+    def open_tag(tag, attr=None):
+        nonlocal html_output
+        if attr:
+            html_output += f"<{tag} {attr} />" if tag.startswith("img") else f"<{tag} {attr}>"
+        else:
+            html_output += f"<{tag}>" if not tag.startswith("img") else ""
+        tag_stack.append(tag)
+
+    # Función para cerrar una etiqueta HTML
+    def close_tag():
+        nonlocal html_output
+        if tag_stack:
+            tag = tag_stack.pop()
+            if not tag.startswith("img"):
+                html_output += f"</{tag.split()[0]}>"
+
+    # Función para procesar tablas
+    def process_table(content, rows, cols):
+        table_html = "<table>"
+        cell_data = content.split("}, {")  # Split items by }, {
+        cell_index = 0
+        
+        for row in range(rows):
+            table_html += "<tr>"
+            for col in range(cols):
+                cell_html = cell_data[cell_index].strip()
+                table_html += f"<td>{cell_html}</td>"
+                cell_index += 1
+            table_html += "</tr>"
+        
+        table_html += "</table>"
+        return table_html
+
+    url_buffer = ""
+    img_buffer = ""
+    table_buffer = ""
+    inside_url = False
+    inside_img = False
+    inside_table = False
+    rows, cols = 0, 0
+
+    for line in data:
+        # Abrir etiqueta
+        if line in tag_map and not inside_table:
+            if line == "/url":
+                inside_url = True
+                url_buffer = ""
+            elif line == "/img":
+                inside_img = True
+                img_buffer = ""
+            elif line == "/tb":
+                inside_table = True
+            else:
+                open_tag(tag_map[line])
+        
+        # Procesar contenido de URL
+        elif inside_url:
+            if line == "}":
+                html_output += f"<a href='{url_buffer.strip()}'>{url_buffer.strip()}</a>"
+                inside_url = False
+            elif "PLAIN_TEXT" in line:
+                text = re.search(r'PLAIN_TEXT\s*:\s*(.*)', line).group(1)
+                url_buffer += text
+
+        # Procesar contenido de imagen
+        elif inside_img:
+            if line == "}":
+                # Use absolute path for the image source
+                img_src = f"{img_buffer.strip()}"
+                html_output += f"<img src=\"{img_src}\" />"
+                inside_img = False
+            elif "PLAIN_TEXT" in line:
+                text = re.search(r'PLAIN_TEXT\s*:\s*(.*)', line).group(1)
+                img_buffer += text
+
+        # Procesar contenido de tabla
+        elif inside_table:
+            print(line)
+            if "INT" in line:
+                if "rows" not in locals():
+                    rows = int(re.search(r'INT\s*:\s*(\d+)', line).group(1))
+                else:
+                    cols = int(re.search(r'INT\s*:\s*(\d+)', line).group(1))
+            elif "PLAIN_TEXT" in line or line.strip().startswith("{") or line.strip().startswith("/"):
+                if line.strip() != "{" and line.strip() != "}":
+                    table_buffer += line.strip()
+            elif line == "}":
+                html_output += process_table(table_buffer, rows, cols)
+                inside_table = False
+                rows, cols = 0, 0
+                table_buffer = ""
+                
+        # Cerrar etiqueta
+        elif line == "}":
+            close_tag()
+
+        elif line == "/n":
+            html_output += "<br>"
+
+        # Texto plano
+        elif "PLAIN_TEXT" in line:
+            text = re.search(r'PLAIN_TEXT\s*:\s*(.*)', line).group(1)
+            html_output += text
+
+        # Número entero
+        elif "INT" in line:
+            number = re.search(r'INT\s*:\s*(\d+)', line).group(1)
+            html_output += number
+
+        # Manejo especial para listas
+        elif line == "{":
+            if tag_stack and tag_stack[-1] in ["ul", "ol"]:
+                open_tag("li")
+        elif line == "}":
+            if tag_stack and tag_stack[-1] == "li":
+                close_tag()
+
+    # Cerrar todas las etiquetas restantes
+    while tag_stack:
+        close_tag()
+
+    return html_output
 
 grammar_productions=read_grammar(grammar_file_path)
 parse_table=read_grammar_table(table_file_path)
@@ -475,3 +621,25 @@ if len(parse_errors) == 0:
     print(Fore.GREEN + "============================================================================" + Style.RESET_ALL)
     
     print_preOrder_tree(tree_root)
+    
+
+    print(Fore.GREEN + "============================================================================" + Style.RESET_ALL)
+    
+    print(Fore.GREEN +"""
+    ╦ ╦╔╦╗╔╦╗╦    ╔╦╗╦═╗╔═╗╔╗╔╔═╗╦  ╔═╗╔╦╗╦╔═╗╔╗╔
+    ╠═╣ ║ ║║║║     ║ ╠╦╝╠═╣║║║╚═╗║  ╠═╣ ║ ║║ ║║║║
+    ╩ ╩ ╩ ╩ ╩╩═╝   ╩ ╩╚═╩ ╩╝╚╝╚═╝╩═╝╩ ╩ ╩ ╩╚═╝╝╚╝"""+ Style.RESET_ALL)
+
+    print(Fore.GREEN + "============================================================================" + Style.RESET_ALL)
+    
+    options = {
+    'user-style-sheet': 'styles/styles.css',  # Ruta al archivo CSS
+    'disable-smart-shrinking': ''
+    }
+
+    html_output = translate_to_html(data)
+    print(html_output)
+
+
+    # Convertir a PDF usando pdfkit
+    pdfkit.from_string(html_output, 'output/output.pdf', options=options)

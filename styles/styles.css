@@ -1,0 +1,112 @@
+/* Estilos generales */
+
+/* Encabezados */
+h1 {
+    font-size: 18pt;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.5in;
+}
+
+h2 {
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 0.5in;
+    margin-bottom: 0.2in;
+}
+
+h3 {
+    font-size: 12pt;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 0.4in;
+    margin-bottom: 0.2in;
+}
+
+/* Párrafos */
+p {
+    text-align: justify;
+    margin-bottom: 0.2in;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 10pt;
+    margin: 1in;
+    line-height: 1.5;
+}
+
+/* Listas */
+ul, ol {
+    margin: 0 0 0 0.5in;
+}
+
+li {
+    margin-bottom: 0.1in;
+}
+
+/* Estilos de tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0.5in;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+    background-color: #f2f2f2;
+}
+
+/* Estilos adicionales para énfasis */
+b {
+    font-weight: bold;
+}
+
+i {
+    font-style: italic;
+}
+
+u {
+    text-decoration: underline;
+}
+
+/* Estilo de título de sección */
+.section-title {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-top: 0.5in;
+    margin-bottom: 0.2in;
+}
+
+/* Estilo de figura y tablas */
+.figure, .table {
+    margin-top: 0.3in;
+    margin-bottom: 0.3in;
+    text-align: center;
+}
+
+.figure-caption, .table-caption {
+    font-size: 8pt;
+    text-align: center;
+    margin-top: 0.1in;
+}
+
+/* Estilo de pie de página */
+.footer {
+    font-size: 8pt;
+    text-align: center;
+    margin-top: 1in;
+    border-top: 1px solid black;
+    padding-top: 0.2in;
+}
+
+img {
+    display: block; /* Para asegurar que el margin: auto funcione correctamente */
+    margin: auto; /* Centrar horizontalmente */
+    max-width: 50%; /* Tamaño máximo del 50% del contenedor */
+    height: auto; /* Altura automática para mantener la proporción */
+}
