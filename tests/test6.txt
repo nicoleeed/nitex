@@ -1,3 +1,3 @@
 
-/tb[(3,3)]{{/b{tb1 TB B}},{a3},{/u{tb1 TB U}},{a3 a},{/i{tb1 TB I}},{a3}}/n
+/tb[(3,2)]{{/b{tb1 TB B}},{a3},{/u{tb1 TB U}},{a3 a},{/i{tb1 TB I}},{a3}}/n
 $

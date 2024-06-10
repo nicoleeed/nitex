@@ -1,4 +1,5 @@
-/t1{Ejemplo t1 /b{bold /u{underline} } }/n
-/t1{ Ejemplo titulo1}/n
+/t1{Ejemplo t1 /b{bold /u{underline} } }
+/p{Ejemplo t1 /b{bold /u{underline} } }/n
+/t2{ Ejemplo titulo2}/n
 /l{{ejemplo lista}, {/b{ejemplo lista(bold)}}, {/u{ejemplo lista(underline)}} }/n
 $

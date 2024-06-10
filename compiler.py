@@ -15,6 +15,23 @@ reserved_words = ["/t1", "/t2", "/t3", "/p", "/url", "/img","/tb","/l","/sl","/b
 delimiter_operators = [ '[', ']', '{', '}', ',','(',')']
 special_caracters = ['@', '&', '|', '~', '\\','\{', '\}',"/","\\"]
 
+
+# Diccionario de correspondencia entre etiquetas y HTML
+tag_map = {
+    "/t1": "h1",
+    "/t2": "h2",
+    "/t3": "h3",
+    "/b": "b",
+    "/i": "i",
+    "/u": "u",
+    "/p": "p",
+    "/url": "a href=''",
+    "/img": "img src=''",
+    "/l": "ul",
+    "/sl": "ol",
+    "/tb": "table"
+}
+    
 index = 0
 errors = 0
 row = 1
@@ -23,6 +40,13 @@ output_tokens = []
 tokens = []
 output_errors = []
 parse_errors = []
+data_tree = []
+table_aux = []
+tb_nodes = []
+table_row = 0
+table_column = 0
+table_opt = ''
+n_tables=0
 
 def print_presentation():
     print(Fore.RED + """
@@ -287,18 +311,90 @@ def find_leaf_node(root, target_name):
                 continue
             last_found_node = node
     return last_found_node
-data = []
-def print_preOrder_tree(root):
-    for node in PreOrderIter(root):
+
+def convert_to_table(html_text, col, row):
+    # Eliminar las etiquetas <ul> y </ul>
+    html_text = re.sub(r'</?ul>', '', html_text)
+    
+    # Cambiar las etiquetas <li> por <td>
+    html_text = re.sub(r'<li>', '<td>', html_text)
+    html_text = re.sub(r'</li>', '</td>', html_text)
+
+    # Agregar las etiquetas <tr> y </tr>
+    elements = re.findall(r'<td>.*?</td>', html_text)
+    new_text = ""
+    row_count = 0
+
+    for i in range(0, len(elements), col):
+        new_text += "<tr>"
+        new_text += ''.join(elements[i:i + col])
+        new_text += "</tr>\n"
+        row_count += 1
+        if row_count == row:
+            break
+    
+    return new_text
+
+def process_table(node):
+    global table_aux
+    global table_opt
+    global table_row
+    global table_column
+
+    #print("Table")
+    #print("========================================================")
+    for node in PreOrderIter(node):
         if node.name.startswith(("PLAIN_TEXT", "INT")):
-            print(node.name)
-            data.append(node.name)
+            #print(node.name)
+            table_aux.append(node.name)
         elif node.name in terminal_symbols:
-            print(node.name)
-            data.append(node.name)
+            #print(node.name)
+            table_aux.append(node.name)
+    #print("========================================================")
+    
+    table_row = int(table_aux[3].split(": ")[1])
+    table_column = int(table_aux[5].split(": ")[1])
+    table_aux = table_aux[8:]
+    table_aux.insert(0, "/l")
+    #print(table_aux)
+    #print("========================================================")
+    #print(table_row)
+    #print(table_column)
+    table_opt += translate_to_html(table_aux)
+    
+def find_tables(root):
+    global n_tables
+    con_tables = 0
+    for node in PreOrderIter(root):
+        if node.name == "TB":
+            con_tables += 1
+            if con_tables == n_tables:
+                tb_nodes.append(node)
+                process_table(tb_nodes[0])
+                
+def process_tree(root):
+    def custom_pre_order(node):
+        if node.name == "TB":
+            data_tree.append("/tb")
+            data_tree.append("{")
+            data_tree.append("}")
+            #print("/tb")
+            return 
+        if node.name.startswith(("PLAIN_TEXT", "INT")):
+            #print(node.name)
+            data_tree.append(node.name)
+        elif node.name in terminal_symbols:
+            #print(node.name)
+            data_tree.append(node.name)
+        for child in node.children:
+            custom_pre_order(child)
+
+    custom_pre_order(root)
+              
 def preOrder_tree(root):
     for node in PreOrderIter(root):
         print(node.name)
+
 def print_tree(tree_root):
     for pre, _, node in RenderTree(tree_root):
         if node.name.startswith(("PLAIN_TEXT", "INT")):
@@ -437,28 +533,16 @@ def parsing(scaned_tokens):
                 continue
     return tree_root
       
-
-print_presentation()
-def translate_to_html(data):
+def translate_to_html(data_tree):
     html_output = ""
     tag_stack = []
-
-    # Diccionario de correspondencia entre etiquetas y HTML
-    tag_map = {
-        "/t1": "h1",
-        "/t2": "h2",
-        "/t3": "h3",
-        "/b": "b",
-        "/i": "i",
-        "/u": "u",
-        "/p": "p",
-        "/url": "a href=''",
-        "/img": "img src=''",
-        "/l": "ul",
-        "/sl": "ol",
-        "/tb": "table"
-    }
-
+    global table_row
+    global table_column
+    global table_opt
+    global table_aux
+    global n_tables
+    global tb_nodes
+    
     # Función para abrir una etiqueta HTML
     def open_tag(tag, attr=None):
         nonlocal html_output
@@ -476,34 +560,14 @@ def translate_to_html(data):
             if not tag.startswith("img"):
                 html_output += f"</{tag.split()[0]}>"
 
-    # Función para procesar tablas
-    def process_table(content, rows, cols):
-        table_html = "<table>"
-        cell_data = content.split("}, {")  # Split items by }, {
-        cell_index = 0
-        
-        for row in range(rows):
-            table_html += "<tr>"
-            for col in range(cols):
-                cell_html = cell_data[cell_index].strip()
-                table_html += f"<td>{cell_html}</td>"
-                cell_index += 1
-            table_html += "</tr>"
-        
-        table_html += "</table>"
-        return table_html
-
     url_buffer = ""
     img_buffer = ""
-    table_buffer = ""
     inside_url = False
     inside_img = False
-    inside_table = False
-    rows, cols = 0, 0
 
-    for line in data:
+    for line in data_tree:
         # Abrir etiqueta
-        if line in tag_map and not inside_table:
+        if line in tag_map :
             if line == "/url":
                 inside_url = True
                 url_buffer = ""
@@ -511,7 +575,17 @@ def translate_to_html(data):
                 inside_img = True
                 img_buffer = ""
             elif line == "/tb":
-                inside_table = True
+                open_tag(tag_map[line])
+                
+                n_tables +=1
+                table_opt=''
+                table_aux=[]
+                table_column=0
+                table_row=0
+                tb_nodes=[]
+                find_tables(tree_root)
+                html_output += convert_to_table(table_opt, table_column, table_row)
+                
             else:
                 open_tag(tag_map[line])
         
@@ -534,23 +608,6 @@ def translate_to_html(data):
             elif "PLAIN_TEXT" in line:
                 text = re.search(r'PLAIN_TEXT\s*:\s*(.*)', line).group(1)
                 img_buffer += text
-
-        # Procesar contenido de tabla
-        elif inside_table:
-            print(line)
-            if "INT" in line:
-                if "rows" not in locals():
-                    rows = int(re.search(r'INT\s*:\s*(\d+)', line).group(1))
-                else:
-                    cols = int(re.search(r'INT\s*:\s*(\d+)', line).group(1))
-            elif "PLAIN_TEXT" in line or line.strip().startswith("{") or line.strip().startswith("/"):
-                if line.strip() != "{" and line.strip() != "}":
-                    table_buffer += line.strip()
-            elif line == "}":
-                html_output += process_table(table_buffer, rows, cols)
-                inside_table = False
-                rows, cols = 0, 0
-                table_buffer = ""
                 
         # Cerrar etiqueta
         elif line == "}":
@@ -573,6 +630,7 @@ def translate_to_html(data):
         elif line == "{":
             if tag_stack and tag_stack[-1] in ["ul", "ol"]:
                 open_tag("li")
+       
         elif line == "}":
             if tag_stack and tag_stack[-1] == "li":
                 close_tag()
@@ -580,12 +638,15 @@ def translate_to_html(data):
     # Cerrar todas las etiquetas restantes
     while tag_stack:
         close_tag()
-
     return html_output
+
 
 grammar_productions=read_grammar(grammar_file_path)
 parse_table=read_grammar_table(table_file_path)
 terminal_symbols = read_terminals(terminals_file_path)
+
+
+print_presentation()
 
 print_grammar()
 
@@ -605,10 +666,9 @@ if len(parse_errors) > 0:
     print(Fore.CYAN + "============================================================================" )
     for i in parse_errors:
         print(Fore.CYAN + i+ Style.RESET_ALL)
+else:
+    print(Fore.GREEN + "============================================================================" + Style.RESET_ALL)
 
-print(Fore.GREEN + "============================================================================" + Style.RESET_ALL)
-
-if len(parse_errors) == 0:
     print(Fore.GREEN +"""
 ╔═╗╔═╗╦═╗╔═╗╔═╗  ╔╦╗╦═╗╔═╗╔═╗
 ╠═╝╠═╣╠╦╝╚═╗║╣    ║ ╠╦╝║╣ ║╣ 
@@ -620,8 +680,7 @@ if len(parse_errors) == 0:
 
     print(Fore.GREEN + "============================================================================" + Style.RESET_ALL)
     
-    print_preOrder_tree(tree_root)
-    
+    process_tree(tree_root)
 
     print(Fore.GREEN + "============================================================================" + Style.RESET_ALL)
     
@@ -632,14 +691,40 @@ if len(parse_errors) == 0:
 
     print(Fore.GREEN + "============================================================================" + Style.RESET_ALL)
     
-    options = {
-    'user-style-sheet': 'styles/styles.css',  # Ruta al archivo CSS
-    'disable-smart-shrinking': ''
-    }
-
-    html_output = translate_to_html(data)
+    html_output = translate_to_html(data_tree)
     print(html_output)
+    print(Fore.GREEN + "============================================================================" + Style.RESET_ALL)
 
+    print(Fore.GREEN + "============================================================================" + Style.RESET_ALL)
+    
+    input_html_path = 'styles/html.html'
+    output_text_path = 'output/output.pdf'
+    
+    with open(input_html_path, 'r', encoding='utf-8') as file:
+        html_content = file.read()
 
-    # Convertir a PDF usando pdfkit
-    pdfkit.from_string(html_output, 'output/output.pdf', options=options)
+    # Encuentra la posición de la etiqueta <body>
+    body_start_pos = html_content.find('<body>')
+    
+    if body_start_pos == -1:
+        raise ValueError("La etiqueta <body> no se encontró en el HTML.")
+
+    # Extrae todo el contenido antes de <body>
+    pre_body_content = html_content[:body_start_pos]
+
+    # Extrae el contenido dentro de <body> y después
+    body_content = html_content[body_start_pos + len('<body>'):]
+    
+    # Encuentra la posición de la etiqueta </body>
+    body_end_pos = body_content.find('</body>')
+    
+    if body_end_pos == -1:
+        raise ValueError("La etiqueta </body> no se encontró en el HTML.")
+    
+    # Extrae el contenido después de </body>
+    post_body_content = body_content[body_end_pos + len('</body>'):]
+    
+    # Construye el nuevo contenido
+    new_content = pre_body_content + '<body>' + html_output + '</body>' + post_body_content
+        
+    pdfkit.from_string(new_content, 'output/output.pdf')
