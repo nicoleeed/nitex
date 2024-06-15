@@ -1,5 +1,7 @@
 ![Logo del Proyecto](imagenes/logo.png)
-# Nicole Durand Zeballos
+## Nicole Durand Zeballos
+
+# Language Syntax
 
 ## Productions
 0.  G -> C
@@ -68,4 +70,31 @@
 | BTC     |   |    |    |    |    |     |     |     |      |      |     |    |    |     |    |    |    |             |     |   |   |   | 35|
 | PO      |   |    |    |    |    |     |     |     |      |      |     |    |    |     |    |    |    |             |     | 37|   |   |   |
 | PC      |   |    |    |    |    |     |     |     |      |      |     |    |    |     |    |    |    |             |     |   | 38|   |   |
+
+## Terminals
+
+/p
+/t1
+/t2
+/t3
+/url
+/img
+/b
+/i
+/u
+/l
+/sl
+/tb
+,
+/n
+{
+}
+PLAIN_TEXT
+INT
+[
+]
+(
+)
+$
+
 
