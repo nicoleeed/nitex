@@ -6,18 +6,18 @@
 2. **wkhtmltopdf**: Necessary tool to convert HTML to PDF.
    ```bash
    sudo apt-get install wkhtmltopdf
-3. colorama: To work with colorful text in the console.
-  ```bash
-  pip install colorama
-4. anytree: To work with tree structures.
-  ```bash
-  pip install anytree
-5. tabulate: To format tables.
-  ```bash
-  pip install tabulate
-6. pdfkit: To generate PDF files from HTML.
-  ```bash
-  pip install pdfkit
+3. **colorama**: To work with colorful text in the console.
+   ```bash
+   pip install colorama
+4. **anytree**: To work with tree structures.
+   ```bash
+   pip install anytree
+5. **tabulate**: To format tables.
+   ```bash
+   pip install tabulate
+6. **pdfkit**: To generate PDF files from HTML.
+   ```bash
+   pip install pdfkit
 
 # Language Syntax
 
