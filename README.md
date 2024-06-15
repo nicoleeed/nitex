@@ -19,6 +19,14 @@
    ```bash
    pip install pdfkit
 
+# How to Compile
+1. Clone the repository
+   ```bash
+   git clone git@github.com:nicoleeed/nitex.git
+3. Execution command
+   ```bash
+   python3 compiler.py
+   
 # Language Syntax
 
 ## Productions
