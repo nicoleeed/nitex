@@ -1,4 +1,4 @@
-![Logo del Proyecto](imagenes/logo.png)
+![Logo del Proyecto](img/NiTex.png)
 ## Nicole Durand Zeballos
 
 # Language Syntax
