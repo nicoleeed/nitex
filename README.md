@@ -125,4 +125,16 @@
 | )           |
 | $           |
 
+# Execution Examples
+
+## Success Execution
+Refer to the success execution example file.
+
+- [Success Execution Example](ConsoleOutput/Success_Output.txt)
+
+## Fail Execution: Error Handling
+Refer to the error handling example file.
+
+- [Fail Execution Example](ConsoleOutput/Fail_Output.txt)
+
 
