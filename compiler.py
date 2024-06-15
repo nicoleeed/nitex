@@ -4,7 +4,7 @@ from tabulate import tabulate
 import re
 import pdfkit
 
-input_code = open('tests/test1.txt').read()
+input_code = open('tests/test3.txt').read()
 grammar_file_path = 'grammar/LL1Grammar.txt'
 table_file_path = 'table/table.txt'
 terminals_file_path = 'grammar/terminals.txt'
@@ -280,7 +280,7 @@ def scan():
  ╩ ╚═╝╩ ╩╚═╝╝╚╝╚═╝"""+ Style.RESET_ALL)
     print(Fore.BLUE + "============================================================================" + Style.RESET_ALL)
     for i in tokens:
-        print(i)
+       print(i)
     print(Fore.BLUE + "============================================================================" + Style.RESET_ALL)
 
 def find_closest_node(node, target_name):
