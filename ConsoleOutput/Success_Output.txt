@@ -1,0 +1,2080 @@
+            
+███╗   ██╗██╗████████╗███████╗██╗  ██╗
+████╗  ██║██║╚══██╔══╝██╔════╝╚██╗██╔╝
+██╔██╗ ██║██║   ██║   █████╗   ╚███╔╝ 
+██║╚██╗██║██║   ██║   ██╔══╝   ██╔██╗ 
+██║ ╚████║██║   ██║   ███████╗██╔╝ ██╗
+╚═╝  ╚═══╝╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+
+               _  _ ___ ___ ___  _    ___   ___  _   _ ___    _   _  _ ___  
+         ___  | \| |_ _/ __/ _ \| |  | __| |   \| | | | _ \  /_\ | \| |   \ 
+        |___| |  ` || | (_| (_) | |__| _|  | |) | |_| |   / / _ \| .` | |) |
+              |_|\_|___\___\___/|____|___| |___/ \___/|_|_\/_/ \_\_|\_|___/ 
+                                                                                                           
+
+╔═╗╦═╗╔═╗╔╦╗╦ ╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
+╠═╝╠╦╝║ ║ ║║║ ║║   ║ ║║ ║║║║╚═╗
+╩  ╩╚═╚═╝═╩╝╚═╝╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
+==========================================================================================================================================================================================
+
+0  G -> C
+1  C -> TEXT C
+2  C -> NLIST C
+3  C -> LIST C
+4  C -> NL C
+5  C -> STEXT C
+6  C -> TB C
+7  C -> ε
+8  TM -> ALPHANUM TM1
+9  TM -> STEXT TM1
+10 TM1 -> TM
+11 TM1 -> ε
+12 TEXT -> /p BLCO TM BLCC
+13 TEXT -> /t1 BLCO TM BLCC
+14 TEXT -> /t2 BLCO TM BLCC
+15 TEXT -> /t3 BLCO TM BLCC
+16 TEXT -> /url BLCO TM BLCC
+17 TEXT -> /img BLCO TM BLCC
+18 STEXT -> /b BLCO TM BLCC
+19 STEXT -> /i BLCO TM BLCC
+20 STEXT -> /u BLCO TM BLCC
+21 ITEML -> BLCO TM BLCC ITEML1
+22 ITEML1 -> , ITEML
+23 ITEML1 -> ε
+24 LIST -> /l BLCO ITEML BLCC
+25 NLIST -> /sl BLCO ITEML BLCC
+26 NL -> /n
+27 BLCO -> {
+28 BLCC -> }
+29 CHAR -> PLAIN_TEXT
+30 ALPHANUM -> CHAR
+31 ALPHANUM -> DIGIT
+32 DIGIT -> INT
+33 TB -> /tb BTO TBZ BTC BLCO ITEML BLCC
+34 BTO -> [
+35 BTC -> ]
+36 TBZ -> PO DIGIT , DIGIT PC
+37 PO -> (
+38 PC -> )
+
+╔═╗╔═╗╦═╗╔═╗╦╔╗╔╔═╗  ╔╦╗╔═╗╔╗ ╦  ╔═╗
+╠═╝╠═╣╠╦╝╚═╗║║║║║ ╦   ║ ╠═╣╠╩╗║  ║╣ 
+╩  ╩ ╩╩╚═╚═╝╩╝╚╝╚═╝   ╩ ╩ ╩╚═╝╩═╝╚═╝
+==========================================================================================================================================================================================
+
+╒══════════╤═══════╤═══════╤═══════╤═══════╤═══════╤════════╤════════╤════════╤═════════╤═════════╤════════╤═══════╤═══════╤════════╤═══════╤═══════╤══════╤═══════════════╤════════╤═══════╤═══════╤═══════╤═════╕
+│          │ $     │ /p    │ /b    │ /i    │ /u    │ /t1    │ /t2    │ /t3    │ /url    │ /img    │ /sl    │ /l    │ /n    │ /tb    │ {     │ }     │ ,    │ PLAIN_TEXT    │ INT    │ (     │ )     │ [     │ ]   │
+╞══════════╪═══════╪═══════╪═══════╪═══════╪═══════╪════════╪════════╪════════╪═════════╪═════════╪════════╪═══════╪═══════╪════════╪═══════╪═══════╪══════╪═══════════════╪════════╪═══════╪═══════╪═══════╪═════╡
+│ G        │ 0     │ 0     │ 0     │ 0     │ 0     │ 0      │ 0      │ 0      │ 0       │ 0       │ 0      │ 0     │ 0     │ 0      │       │       │      │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ C        │ 7     │ 1     │ 5     │ 5     │ 5     │ 1      │ 1      │ 1      │ 1       │ 1       │ 2      │ 3     │ 4     │ 6      │       │       │      │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ TM       │       │       │ 9     │ 9     │ 9     │        │        │        │         │         │        │       │       │        │       │       │      │ 8             │ 8      │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ TM1      │ 11    │       │ 10    │ 10    │ 10    │        │        │        │         │         │        │       │       │        │       │ 11    │      │ 10            │ 10     │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ TEXT     │       │ 12    │       │       │       │ 13     │ 14     │ 15     │ 16      │ 17      │        │       │       │        │       │       │      │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ STEXT    │       │       │ 18    │ 19    │ 20    │        │        │        │         │         │        │       │       │        │       │       │      │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ ITEML    │       │       │       │       │       │        │        │        │         │         │        │       │       │        │ 21    │       │      │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ ITEML1   │ 23    │       │       │       │       │        │        │        │         │         │        │       │       │        │       │ 23    │ 22   │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ LIST     │       │       │       │       │       │        │        │        │         │         │        │ 24    │       │        │       │       │      │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ NLIST    │       │       │       │       │       │        │        │        │         │         │ 25     │       │       │        │       │       │      │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ NL       │       │       │       │       │       │        │        │        │         │         │        │       │ 26    │        │       │       │      │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ BLCO     │       │       │       │       │       │        │        │        │         │         │        │       │       │        │ 27    │       │      │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ BLCC     │       │       │       │       │       │        │        │        │         │         │        │       │       │        │       │ 28    │      │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ CHAR     │       │       │       │       │       │        │        │        │         │         │        │       │       │        │       │       │      │ 31            │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ ALPHANUM │       │       │       │       │       │        │        │        │         │         │        │       │       │        │       │       │      │ 29            │ 30     │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ DIGIT    │       │       │       │       │       │        │        │        │         │         │        │       │       │        │       │       │      │               │ 32     │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ TB       │       │       │       │       │       │        │        │        │         │         │        │       │       │ 33     │       │       │      │               │        │       │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ TBZ      │       │       │       │       │       │        │        │        │         │         │        │       │       │        │       │       │      │               │        │ 36    │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ BTO      │       │       │       │       │       │        │        │        │         │         │        │       │       │        │       │       │      │               │        │       │       │ 34    │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ BTC      │       │       │       │       │       │        │        │        │         │         │        │       │       │        │       │       │      │               │        │       │       │       │ 35  │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ PO       │       │       │       │       │       │        │        │        │         │         │        │       │       │        │       │       │      │               │        │ 37    │       │       │     │
+├──────────┼───────┼───────┼───────┼───────┼───────┼────────┼────────┼────────┼─────────┼─────────┼────────┼───────┼───────┼────────┼───────┼───────┼──────┼───────────────┼────────┼───────┼───────┼───────┼─────┤
+│ PC       │       │       │       │       │       │        │        │        │         │         │        │       │       │        │       │       │      │               │        │       │ 38    │       │     │
+╘══════════╧═══════╧═══════╧═══════╧═══════╧═══════╧════════╧════════╧════════╧═════════╧═════════╧════════╧═══════╧═══════╧════════╧═══════╧═══════╧══════╧═══════════════╧════════╧═══════╧═══════╧═══════╧═════╛
+
+╔╦╗╔═╗╦═╗╔╦╗╦╔╗╔╔═╗╦  ╔═╗
+ ║ ║╣ ╠╦╝║║║║║║║╠═╣║  ╚═╗
+ ╩ ╚═╝╩╚═╩ ╩╩╝╚╝╩ ╩╩═╝╚═╝
+==========================================================================================================================================================================================
+/p
+/t1
+/t2
+/t3
+/url
+/img
+/b
+/i
+/u
+/l
+/sl
+/tb
+,
+/n
+{
+}
+PLAIN_TEXT
+INT
+[
+]
+(
+)
+$
+==========================================================================================================================================================================================
+
+╔═╗╔═╗╔═╗╔╗╔╔╗╔╔═╗╦═╗
+╚═╗║  ╠═╣║║║║║║║╣ ╠╦╝
+╚═╝╚═╝╩ ╩╝╚╝╝╚╝╚═╝╩╚═
+INFO SCAN - Start scanning
+==========================================================================================================================================================================================
+DEBUG SCAN - RESERVED_WORD "/t1" found at (1:3)
+DEBUG SCAN - BLCO "{" found at (1:4)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo TITULO 1" found at (1:20)
+DEBUG SCAN - BLCC "}" found at (1:21)
+DEBUG SCAN - RESERVED_WORD "/b" found at (1:25)
+DEBUG SCAN - BLCO "{" found at (1:26)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo texto en (bold)" found at (1:49)
+DEBUG SCAN - BLCC "}" found at (1:50)
+DEBUG SCAN - NL "/" found at (2:0)
+DEBUG SCAN - RESERVED_WORD "/i" found at (2:3)
+DEBUG SCAN - BLCO "{" found at (2:4)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo texto en (italic)" found at (2:29)
+DEBUG SCAN - BLCC "}" found at (2:30)
+DEBUG SCAN - NL "/" found at (3:0)
+DEBUG SCAN - RESERVED_WORD "/u" found at (3:3)
+DEBUG SCAN - BLCO "{" found at (3:4)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo texto en  (underline)" found at (3:33)
+DEBUG SCAN - BLCC "}" found at (3:34)
+DEBUG SCAN - NL "/" found at (4:0)
+DEBUG SCAN - RESERVED_WORD "/p" found at (4:3)
+DEBUG SCAN - BLCO "{" found at (4:4)
+DEBUG SCAN - PLAIN_TEXT "Esto es un " found at (4:15)
+DEBUG SCAN - RESERVED_WORD "/b" found at (4:17)
+DEBUG SCAN - BLCO "{" found at (4:18)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo N " found at (4:28)
+DEBUG SCAN - BLCC "}" found at (4:29)
+DEBUG SCAN - PLAIN_TEXT "de parrafo de texto con palabras con estilos en " found at (4:78)
+DEBUG SCAN - RESERVED_WORD "/i" found at (4:80)
+DEBUG SCAN - BLCO "{" found at (4:81)
+DEBUG SCAN - PLAIN_TEXT "nuestro BI " found at (4:92)
+DEBUG SCAN - BLCC "}" found at (4:93)
+DEBUG SCAN - RESERVED_WORD "/u" found at (4:96)
+DEBUG SCAN - BLCO "{" found at (4:97)
+DEBUG SCAN - PLAIN_TEXT "lenguaje U" found at (4:107)
+DEBUG SCAN - BLCC "}" found at (4:108)
+DEBUG SCAN - BLCC "}" found at (4:109)
+DEBUG SCAN - RESERVED_WORD "/tb" found at (4:113)
+DEBUG SCAN - BTO "[" found at (4:114)
+DEBUG SCAN - PO "(" found at (4:115)
+DEBUG SCAN - INT " 4 " found at (4:116)
+DEBUG SCAN - SPC "," found at (4:117)
+DEBUG SCAN - INT " 2 " found at (4:118)
+DEBUG SCAN - PC ")" found at (4:119)
+DEBUG SCAN - BTC "]" found at (4:120)
+DEBUG SCAN - BLCO "{" found at (4:121)
+DEBUG SCAN - BLCO "{" found at (4:122)
+DEBUG SCAN - RESERVED_WORD "/b" found at (4:124)
+DEBUG SCAN - BLCO "{" found at (4:125)
+DEBUG SCAN - PLAIN_TEXT "tb1-11" found at (4:131)
+DEBUG SCAN - BLCC "}" found at (4:132)
+DEBUG SCAN - BLCC "}" found at (4:133)
+DEBUG SCAN - SPC "," found at (4:134)
+DEBUG SCAN - BLCO "{" found at (4:135)
+DEBUG SCAN - RESERVED_WORD "/b" found at (4:137)
+DEBUG SCAN - BLCO "{" found at (4:138)
+DEBUG SCAN - PLAIN_TEXT "tb1-12" found at (4:144)
+DEBUG SCAN - BLCC "}" found at (4:145)
+DEBUG SCAN - BLCC "}" found at (4:146)
+DEBUG SCAN - SPC "," found at (4:147)
+DEBUG SCAN - BLCO "{" found at (4:148)
+DEBUG SCAN - RESERVED_WORD "/u" found at (4:150)
+DEBUG SCAN - BLCO "{" found at (4:151)
+DEBUG SCAN - PLAIN_TEXT "tb1-21" found at (4:157)
+DEBUG SCAN - BLCC "}" found at (4:158)
+DEBUG SCAN - BLCC "}" found at (4:159)
+DEBUG SCAN - SPC "," found at (4:160)
+DEBUG SCAN - BLCO "{" found at (4:161)
+DEBUG SCAN - PLAIN_TEXT "tb1-22" found at (4:167)
+DEBUG SCAN - BLCC "}" found at (4:168)
+DEBUG SCAN - SPC "," found at (4:169)
+DEBUG SCAN - BLCO "{" found at (4:170)
+DEBUG SCAN - RESERVED_WORD "/i" found at (4:172)
+DEBUG SCAN - BLCO "{" found at (4:173)
+DEBUG SCAN - PLAIN_TEXT "tb1-31" found at (4:179)
+DEBUG SCAN - BLCC "}" found at (4:180)
+DEBUG SCAN - BLCC "}" found at (4:181)
+DEBUG SCAN - SPC "," found at (4:182)
+DEBUG SCAN - BLCO "{" found at (4:183)
+DEBUG SCAN - PLAIN_TEXT "tb1-32" found at (4:189)
+DEBUG SCAN - BLCC "}" found at (4:190)
+DEBUG SCAN - SPC "," found at (4:191)
+DEBUG SCAN - BLCO "{" found at (4:192)
+DEBUG SCAN - PLAIN_TEXT "tb1-41" found at (4:198)
+DEBUG SCAN - BLCC "}" found at (4:199)
+DEBUG SCAN - SPC "," found at (4:200)
+DEBUG SCAN - BLCO "{" found at (4:201)
+DEBUG SCAN - PLAIN_TEXT "tb1-42" found at (4:207)
+DEBUG SCAN - BLCC "}" found at (4:208)
+DEBUG SCAN - BLCC "}" found at (4:209)
+DEBUG SCAN - NL "/" found at (5:0)
+DEBUG SCAN - RESERVED_WORD "/url" found at (5:5)
+DEBUG SCAN - BLCO "{" found at (5:6)
+DEBUG SCAN - PLAIN_TEXT "https:" found at (5:12)
+DEBUG SCAN - PLAIN_TEXT "/" found at (5:13)
+DEBUG SCAN - PLAIN_TEXT "/www.google.com.pe" found at (5:31)
+DEBUG SCAN - PLAIN_TEXT "/?hl=es" found at (5:38)
+DEBUG SCAN - BLCC "}" found at (5:39)
+DEBUG SCAN - NL "/" found at (6:0)
+DEBUG SCAN - RESERVED_WORD "/t2" found at (6:4)
+DEBUG SCAN - BLCO "{" found at (6:5)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo titulo2" found at (6:21)
+DEBUG SCAN - BLCC "}" found at (6:22)
+DEBUG SCAN - RESERVED_WORD "/p" found at (6:25)
+DEBUG SCAN - BLCO "{" found at (6:26)
+DEBUG SCAN - PLAIN_TEXT "Esto es un ejemplo de parrafo muy largo, It is a " found at (6:75)
+DEBUG SCAN - RESERVED_WORD "/u" found at (6:77)
+DEBUG SCAN - BLCO "{" found at (6:78)
+DEBUG SCAN - PLAIN_TEXT "long established fact that a reader will be" found at (6:121)
+DEBUG SCAN - BLCC "}" found at (6:122)
+DEBUG SCAN - PLAIN_TEXT "distracted by the readable content of a " found at (6:163)
+DEBUG SCAN - RESERVED_WORD "/b" found at (6:165)
+DEBUG SCAN - BLCO "{" found at (6:166)
+DEBUG SCAN - RESERVED_WORD "/u" found at (6:168)
+DEBUG SCAN - BLCO "{" found at (6:169)
+DEBUG SCAN - PLAIN_TEXT "page when looking at its layout" found at (6:200)
+DEBUG SCAN - BLCC "}" found at (6:201)
+DEBUG SCAN - PLAIN_TEXT "tc" found at (6:204)
+DEBUG SCAN - BLCC "}" found at (6:205)
+DEBUG SCAN - PLAIN_TEXT ". The point of " found at (6:220)
+DEBUG SCAN - RESERVED_WORD "/b" found at (6:222)
+DEBUG SCAN - BLCO "{" found at (6:223)
+DEBUG SCAN - PLAIN_TEXT "using " found at (6:229)
+DEBUG SCAN - RESERVED_WORD "/i" found at (6:231)
+DEBUG SCAN - BLCO "{" found at (6:232)
+DEBUG SCAN - PLAIN_TEXT "Lorem " found at (6:238)
+DEBUG SCAN - RESERVED_WORD "/u" found at (6:240)
+DEBUG SCAN - BLCO "{" found at (6:241)
+DEBUG SCAN - PLAIN_TEXT "Ipsum" found at (6:246)
+DEBUG SCAN - BLCC "}" found at (6:247)
+DEBUG SCAN - PLAIN_TEXT "is" found at (6:250)
+DEBUG SCAN - BLCC "}" found at (6:251)
+DEBUG SCAN - PLAIN_TEXT "that" found at (6:256)
+DEBUG SCAN - BLCC "}" found at (6:257)
+DEBUG SCAN - PLAIN_TEXT "it has a more-or-less normal distribution of letters, as opposed to using Content here content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)." found at (6:704)
+DEBUG SCAN - BLCC "}" found at (6:705)
+DEBUG SCAN - RESERVED_WORD "/t3" found at (6:709)
+DEBUG SCAN - BLCO "{" found at (6:710)
+DEBUG SCAN - PLAIN_TEXT "Ejemplo titulo3" found at (6:726)
+DEBUG SCAN - BLCC "}" found at (6:727)
+DEBUG SCAN - RESERVED_WORD "/img" found at (6:732)
+DEBUG SCAN - BLCO "{" found at (6:733)
+DEBUG SCAN - PLAIN_TEXT "https:" found at (6:739)
+DEBUG SCAN - PLAIN_TEXT "/" found at (6:740)
+DEBUG SCAN - PLAIN_TEXT "/previews.123rf.com" found at (6:759)
+DEBUG SCAN - PLAIN_TEXT "/images" found at (6:766)
+DEBUG SCAN - PLAIN_TEXT "/bsd555" found at (6:773)
+DEBUG SCAN - PLAIN_TEXT "/bsd5551910" found at (6:784)
+DEBUG SCAN - PLAIN_TEXT "/bsd555191000325" found at (6:800)
+DEBUG SCAN - PLAIN_TEXT "/131290564-icono-del-concepto-de-compilador-desarrollo-de-software-lenguaje-de-m%C3%A1quina-programaci%C3%B3n.jpg" found at (6:913)
+DEBUG SCAN - BLCC "}" found at (6:914)
+DEBUG SCAN - NL "/" found at (7:0)
+DEBUG SCAN - RESERVED_WORD "/l" found at (7:3616)
+DEBUG SCAN - BLCO "{" found at (7:3617)
+DEBUG SCAN - BLCO "{" found at (7:3618)
+DEBUG SCAN - PLAIN_TEXT "ejemplo lista" found at (7:3631)
+DEBUG SCAN - BLCC "}" found at (7:3632)
+DEBUG SCAN - SPC "," found at (7:3633)
+DEBUG SCAN - BLCO "{" found at (7:3635)
+DEBUG SCAN - RESERVED_WORD "/b" found at (7:3637)
+DEBUG SCAN - BLCO "{" found at (7:3638)
+DEBUG SCAN - PLAIN_TEXT "ejemplo lista(bold)" found at (7:3657)
+DEBUG SCAN - BLCC "}" found at (7:3658)
+DEBUG SCAN - BLCC "}" found at (7:3659)
+DEBUG SCAN - SPC "," found at (7:3660)
+DEBUG SCAN - BLCO "{" found at (7:3662)
+DEBUG SCAN - RESERVED_WORD "/u" found at (7:3664)
+DEBUG SCAN - BLCO "{" found at (7:3665)
+DEBUG SCAN - PLAIN_TEXT "ejemplo lista(underline)" found at (7:3689)
+DEBUG SCAN - BLCC "}" found at (7:3690)
+DEBUG SCAN - BLCC "}" found at (7:3691)
+DEBUG SCAN - BLCC "}" found at (7:3693)
+DEBUG SCAN - NL "/" found at (8:0)
+DEBUG SCAN - RESERVED_WORD "/tb" found at (8:4)
+DEBUG SCAN - BTO "[" found at (8:5)
+DEBUG SCAN - PO "(" found at (8:6)
+DEBUG SCAN - INT " 2 " found at (8:7)
+DEBUG SCAN - SPC "," found at (8:8)
+DEBUG SCAN - INT " 3 " found at (8:9)
+DEBUG SCAN - PC ")" found at (8:10)
+DEBUG SCAN - BTC "]" found at (8:11)
+DEBUG SCAN - BLCO "{" found at (8:12)
+DEBUG SCAN - BLCO "{" found at (8:13)
+DEBUG SCAN - RESERVED_WORD "/b" found at (8:15)
+DEBUG SCAN - BLCO "{" found at (8:16)
+DEBUG SCAN - PLAIN_TEXT "tb2 TB B" found at (8:24)
+DEBUG SCAN - BLCC "}" found at (8:25)
+DEBUG SCAN - BLCC "}" found at (8:26)
+DEBUG SCAN - SPC "," found at (8:27)
+DEBUG SCAN - BLCO "{" found at (8:28)
+DEBUG SCAN - PLAIN_TEXT "a2" found at (8:30)
+DEBUG SCAN - BLCC "}" found at (8:31)
+DEBUG SCAN - SPC "," found at (8:32)
+DEBUG SCAN - BLCO "{" found at (8:33)
+DEBUG SCAN - RESERVED_WORD "/u" found at (8:35)
+DEBUG SCAN - BLCO "{" found at (8:36)
+DEBUG SCAN - PLAIN_TEXT "tb2 TB U" found at (8:44)
+DEBUG SCAN - BLCC "}" found at (8:45)
+DEBUG SCAN - BLCC "}" found at (8:46)
+DEBUG SCAN - SPC "," found at (8:47)
+DEBUG SCAN - BLCO "{" found at (8:48)
+DEBUG SCAN - PLAIN_TEXT "a2 a" found at (8:52)
+DEBUG SCAN - BLCC "}" found at (8:53)
+DEBUG SCAN - SPC "," found at (8:54)
+DEBUG SCAN - BLCO "{" found at (8:55)
+DEBUG SCAN - RESERVED_WORD "/i" found at (8:57)
+DEBUG SCAN - BLCO "{" found at (8:58)
+DEBUG SCAN - PLAIN_TEXT "tb2 TB I" found at (8:66)
+DEBUG SCAN - BLCC "}" found at (8:67)
+DEBUG SCAN - BLCC "}" found at (8:68)
+DEBUG SCAN - SPC "," found at (8:69)
+DEBUG SCAN - BLCO "{" found at (8:70)
+DEBUG SCAN - RESERVED_WORD "/b" found at (8:72)
+DEBUG SCAN - BLCO "{" found at (8:73)
+DEBUG SCAN - PLAIN_TEXT "a2" found at (8:75)
+DEBUG SCAN - BLCC "}" found at (8:76)
+DEBUG SCAN - BLCC "}" found at (8:77)
+DEBUG SCAN - BLCC "}" found at (8:78)
+DEBUG SCAN - NL "/" found at (9:0)
+DEBUG SCAN - RESERVED_WORD "/sl" found at (9:4)
+DEBUG SCAN - BLCO "{" found at (9:5)
+DEBUG SCAN - BLCO "{" found at (9:6)
+DEBUG SCAN - RESERVED_WORD "/u" found at (9:8)
+DEBUG SCAN - BLCO "{" found at (9:9)
+DEBUG SCAN - PLAIN_TEXT "ejemplo sl1" found at (9:20)
+DEBUG SCAN - BLCC "}" found at (9:21)
+DEBUG SCAN - BLCC "}" found at (9:22)
+DEBUG SCAN - SPC "," found at (9:23)
+DEBUG SCAN - BLCO "{" found at (9:24)
+DEBUG SCAN - PLAIN_TEXT "aa" found at (9:26)
+DEBUG SCAN - BLCC "}" found at (9:27)
+DEBUG SCAN - BLCC "}" found at (9:28)
+DEBUG SCAN - NL "/" found at (10:0)
+==========================================================================================================================================================================================
+INFO SCAN - Completed with
+Error(s):  0
+
+╔╦╗╔═╗╦╔═╔═╗╔╗╔╔═╗
+ ║ ║ ║╠╩╗║╣ ║║║╚═╗
+ ╩ ╚═╝╩ ╩╚═╝╝╚╝╚═╝
+==========================================================================================================================================================================================
+/t1
+{
+PLAIN_TEXT
+}
+/b
+{
+PLAIN_TEXT
+}
+/n
+/i
+{
+PLAIN_TEXT
+}
+/n
+/u
+{
+PLAIN_TEXT
+}
+/n
+/p
+{
+PLAIN_TEXT
+/b
+{
+PLAIN_TEXT
+}
+PLAIN_TEXT
+/i
+{
+PLAIN_TEXT
+}
+/u
+{
+PLAIN_TEXT
+}
+}
+/tb
+[
+(
+INT
+,
+INT
+)
+]
+{
+{
+/b
+{
+PLAIN_TEXT
+}
+}
+,
+{
+/b
+{
+PLAIN_TEXT
+}
+}
+,
+{
+/u
+{
+PLAIN_TEXT
+}
+}
+,
+{
+PLAIN_TEXT
+}
+,
+{
+/i
+{
+PLAIN_TEXT
+}
+}
+,
+{
+PLAIN_TEXT
+}
+,
+{
+PLAIN_TEXT
+}
+,
+{
+PLAIN_TEXT
+}
+}
+/n
+/url
+{
+PLAIN_TEXT
+PLAIN_TEXT
+PLAIN_TEXT
+PLAIN_TEXT
+}
+/n
+/t2
+{
+PLAIN_TEXT
+}
+/p
+{
+PLAIN_TEXT
+/u
+{
+PLAIN_TEXT
+}
+PLAIN_TEXT
+/b
+{
+/u
+{
+PLAIN_TEXT
+}
+PLAIN_TEXT
+}
+PLAIN_TEXT
+/b
+{
+PLAIN_TEXT
+/i
+{
+PLAIN_TEXT
+/u
+{
+PLAIN_TEXT
+}
+PLAIN_TEXT
+}
+PLAIN_TEXT
+}
+PLAIN_TEXT
+}
+/t3
+{
+PLAIN_TEXT
+}
+/img
+{
+PLAIN_TEXT
+PLAIN_TEXT
+PLAIN_TEXT
+PLAIN_TEXT
+PLAIN_TEXT
+PLAIN_TEXT
+PLAIN_TEXT
+PLAIN_TEXT
+}
+/n
+/l
+{
+{
+PLAIN_TEXT
+}
+,
+{
+/b
+{
+PLAIN_TEXT
+}
+}
+,
+{
+/u
+{
+PLAIN_TEXT
+}
+}
+}
+/n
+/tb
+[
+(
+INT
+,
+INT
+)
+]
+{
+{
+/b
+{
+PLAIN_TEXT
+}
+}
+,
+{
+PLAIN_TEXT
+}
+,
+{
+/u
+{
+PLAIN_TEXT
+}
+}
+,
+{
+PLAIN_TEXT
+}
+,
+{
+/i
+{
+PLAIN_TEXT
+}
+}
+,
+{
+/b
+{
+PLAIN_TEXT
+}
+}
+}
+/n
+/sl
+{
+{
+/u
+{
+PLAIN_TEXT
+}
+}
+,
+{
+PLAIN_TEXT
+}
+}
+/n
+$
+============================================================================
+
+╔═╗╔═╗╦═╗╔═╗╔═╗╦═╗
+╠═╝╠═╣╠╦╝╚═╗║╣ ╠╦╝
+╩  ╩ ╩╩╚═╚═╝╚═╝╩╚═
+============================================================================
+Stack ->  ['$', '$', 'G']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/t1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/b']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'NL']
+Stack ->  ['$', '$', 'C', '/n']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/i']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'NL']
+Stack ->  ['$', '$', 'C', '/n']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/u']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'NL']
+Stack ->  ['$', '$', 'C', '/n']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/p']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/b']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/i']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/u']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'TB']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'TBZ', 'BTO', '/tb']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'TBZ', 'BTO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'TBZ', '[']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'TBZ']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT', ',', 'DIGIT', 'PO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT', ',', 'DIGIT', '(']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT', ',', 'DIGIT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT', ',', 'INT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'INT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', ')']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', ']']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/b']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/b']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/u']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/i']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'NL']
+Stack ->  ['$', '$', 'C', '/n']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/url']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'NL']
+Stack ->  ['$', '$', 'C', '/n']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/t2']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/p']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/u']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/b']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/u']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/b']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/i']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/u']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/t3']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO', '/img']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'NL']
+Stack ->  ['$', '$', 'C', '/n']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'LIST']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', '/l']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/b']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/u']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'NL']
+Stack ->  ['$', '$', 'C', '/n']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'TB']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'TBZ', 'BTO', '/tb']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'TBZ', 'BTO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'TBZ', '[']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'TBZ']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT', ',', 'DIGIT', 'PO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT', ',', 'DIGIT', '(']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT', ',', 'DIGIT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT', ',', 'INT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'DIGIT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC', 'INT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', 'PC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC', ')']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', 'BTC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', ']']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/b']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/u']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/i']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/b']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'NL']
+Stack ->  ['$', '$', 'C', '/n']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'NLIST']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO', '/sl']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'STEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO', '/u']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML', ',']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', 'BLCO']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM', '{']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'ALPHANUM']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1', 'PLAIN_TEXT']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'TM1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', 'BLCC']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1', '}']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ITEML1']
+Stack ->  ['$', '$', 'C', 'BLCC', 'ε']
+Stack ->  ['$', '$', 'C', 'BLCC']
+Stack ->  ['$', '$', 'C', '}']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'C', 'NL']
+Stack ->  ['$', '$', 'C', '/n']
+Stack ->  ['$', '$', 'C']
+Stack ->  ['$', '$', 'ε']
+Stack ->  ['$', '$']
+Stack ->  ['$']
+
+╔═╗╦ ╦╔═╗╔═╗╔═╗╔═╗╔═╗  ┬
+╚═╗║ ║║  ║  ║╣ ╚═╗╚═╗  │
+╚═╝╚═╝╚═╝╚═╝╚═╝╚═╝╚═╝  o Input successfully parsed!
+==========================================================================================================================================================================================
+
+╔═╗╔═╗╦═╗╔═╗╔═╗  ╔╦╗╦═╗╔═╗╔═╗
+╠═╝╠═╣╠╦╝╚═╗║╣    ║ ╠╦╝║╣ ║╣ 
+╩  ╩ ╩╩╚═╚═╝╚═╝   ╩ ╩╚═╚═╝╚═╝
+==========================================================================================================================================================================================
+G
+└── C
+    ├── TEXT
+    │   ├── /t1
+    │   ├── BLCO
+    │   │   └── {
+    │   ├── TM
+    │   │   ├── ALPHANUM
+    │   │   │   └── Ejemplo TITULO 1
+    │   │   └── TM1
+    │   │       └── ε
+    │   └── BLCC
+    │       └── }
+    └── C
+        ├── STEXT
+        │   ├── /b
+        │   ├── BLCO
+        │   │   └── {
+        │   ├── TM
+        │   │   ├── ALPHANUM
+        │   │   │   └── Ejemplo texto en (bold)
+        │   │   └── TM1
+        │   │       └── ε
+        │   └── BLCC
+        │       └── }
+        └── C
+            ├── NL
+            │   └── /n
+            └── C
+                ├── STEXT
+                │   ├── /i
+                │   ├── BLCO
+                │   │   └── {
+                │   ├── TM
+                │   │   ├── ALPHANUM
+                │   │   │   └── Ejemplo texto en (italic)
+                │   │   └── TM1
+                │   │       └── ε
+                │   └── BLCC
+                │       └── }
+                └── C
+                    ├── NL
+                    │   └── /n
+                    └── C
+                        ├── STEXT
+                        │   ├── /u
+                        │   ├── BLCO
+                        │   │   └── {
+                        │   ├── TM
+                        │   │   ├── ALPHANUM
+                        │   │   │   └── Ejemplo texto en  (underline)
+                        │   │   └── TM1
+                        │   │       └── ε
+                        │   └── BLCC
+                        │       └── }
+                        └── C
+                            ├── NL
+                            │   └── /n
+                            └── C
+                                ├── TEXT
+                                │   ├── /p
+                                │   ├── BLCO
+                                │   │   └── {
+                                │   ├── TM
+                                │   │   ├── ALPHANUM
+                                │   │   │   └── Esto es un 
+                                │   │   └── TM1
+                                │   │       └── TM
+                                │   │           ├── STEXT
+                                │   │           │   ├── /b
+                                │   │           │   ├── BLCO
+                                │   │           │   │   └── {
+                                │   │           │   ├── TM
+                                │   │           │   │   ├── ALPHANUM
+                                │   │           │   │   │   └── Ejemplo N 
+                                │   │           │   │   └── TM1
+                                │   │           │   │       └── ε
+                                │   │           │   └── BLCC
+                                │   │           │       └── }
+                                │   │           └── TM1
+                                │   │               └── TM
+                                │   │                   ├── ALPHANUM
+                                │   │                   │   └── de parrafo de texto con palabras con estilos en 
+                                │   │                   └── TM1
+                                │   │                       └── TM
+                                │   │                           ├── STEXT
+                                │   │                           │   ├── /i
+                                │   │                           │   ├── BLCO
+                                │   │                           │   │   └── {
+                                │   │                           │   ├── TM
+                                │   │                           │   │   ├── ALPHANUM
+                                │   │                           │   │   │   └── nuestro BI 
+                                │   │                           │   │   └── TM1
+                                │   │                           │   │       └── ε
+                                │   │                           │   └── BLCC
+                                │   │                           │       └── }
+                                │   │                           └── TM1
+                                │   │                               └── TM
+                                │   │                                   ├── STEXT
+                                │   │                                   │   ├── /u
+                                │   │                                   │   ├── BLCO
+                                │   │                                   │   │   └── {
+                                │   │                                   │   ├── TM
+                                │   │                                   │   │   ├── ALPHANUM
+                                │   │                                   │   │   │   └── lenguaje U
+                                │   │                                   │   │   └── TM1
+                                │   │                                   │   │       └── ε
+                                │   │                                   │   └── BLCC
+                                │   │                                   │       └── }
+                                │   │                                   └── TM1
+                                │   │                                       └── ε
+                                │   └── BLCC
+                                │       └── }
+                                └── C
+                                    ├── TB
+                                    │   ├── /tb
+                                    │   ├── BTO
+                                    │   │   └── [
+                                    │   ├── TBZ
+                                    │   │   ├── PO
+                                    │   │   │   └── (
+                                    │   │   ├── DIGIT
+                                    │   │   │   └──  4 
+                                    │   │   ├── ,
+                                    │   │   ├── DIGIT
+                                    │   │   │   └──  2 
+                                    │   │   └── PC
+                                    │   │       └── )
+                                    │   ├── BTC
+                                    │   │   └── ]
+                                    │   ├── BLCO
+                                    │   │   └── {
+                                    │   ├── ITEML
+                                    │   │   ├── BLCO
+                                    │   │   │   └── {
+                                    │   │   ├── TM
+                                    │   │   │   ├── STEXT
+                                    │   │   │   │   ├── /b
+                                    │   │   │   │   ├── BLCO
+                                    │   │   │   │   │   └── {
+                                    │   │   │   │   ├── TM
+                                    │   │   │   │   │   ├── ALPHANUM
+                                    │   │   │   │   │   │   └── tb1-11
+                                    │   │   │   │   │   └── TM1
+                                    │   │   │   │   │       └── ε
+                                    │   │   │   │   └── BLCC
+                                    │   │   │   │       └── }
+                                    │   │   │   └── TM1
+                                    │   │   │       └── ε
+                                    │   │   ├── BLCC
+                                    │   │   │   └── }
+                                    │   │   └── ITEML1
+                                    │   │       ├── ,
+                                    │   │       └── ITEML
+                                    │   │           ├── BLCO
+                                    │   │           │   └── {
+                                    │   │           ├── TM
+                                    │   │           │   ├── STEXT
+                                    │   │           │   │   ├── /b
+                                    │   │           │   │   ├── BLCO
+                                    │   │           │   │   │   └── {
+                                    │   │           │   │   ├── TM
+                                    │   │           │   │   │   ├── ALPHANUM
+                                    │   │           │   │   │   │   └── tb1-12
+                                    │   │           │   │   │   └── TM1
+                                    │   │           │   │   │       └── ε
+                                    │   │           │   │   └── BLCC
+                                    │   │           │   │       └── }
+                                    │   │           │   └── TM1
+                                    │   │           │       └── ε
+                                    │   │           ├── BLCC
+                                    │   │           │   └── }
+                                    │   │           └── ITEML1
+                                    │   │               ├── ,
+                                    │   │               └── ITEML
+                                    │   │                   ├── BLCO
+                                    │   │                   │   └── {
+                                    │   │                   ├── TM
+                                    │   │                   │   ├── STEXT
+                                    │   │                   │   │   ├── /u
+                                    │   │                   │   │   ├── BLCO
+                                    │   │                   │   │   │   └── {
+                                    │   │                   │   │   ├── TM
+                                    │   │                   │   │   │   ├── ALPHANUM
+                                    │   │                   │   │   │   │   └── tb1-21
+                                    │   │                   │   │   │   └── TM1
+                                    │   │                   │   │   │       └── ε
+                                    │   │                   │   │   └── BLCC
+                                    │   │                   │   │       └── }
+                                    │   │                   │   └── TM1
+                                    │   │                   │       └── ε
+                                    │   │                   ├── BLCC
+                                    │   │                   │   └── }
+                                    │   │                   └── ITEML1
+                                    │   │                       ├── ,
+                                    │   │                       └── ITEML
+                                    │   │                           ├── BLCO
+                                    │   │                           │   └── {
+                                    │   │                           ├── TM
+                                    │   │                           │   ├── ALPHANUM
+                                    │   │                           │   │   └── tb1-22
+                                    │   │                           │   └── TM1
+                                    │   │                           │       └── ε
+                                    │   │                           ├── BLCC
+                                    │   │                           │   └── }
+                                    │   │                           └── ITEML1
+                                    │   │                               ├── ,
+                                    │   │                               └── ITEML
+                                    │   │                                   ├── BLCO
+                                    │   │                                   │   └── {
+                                    │   │                                   ├── TM
+                                    │   │                                   │   ├── STEXT
+                                    │   │                                   │   │   ├── /i
+                                    │   │                                   │   │   ├── BLCO
+                                    │   │                                   │   │   │   └── {
+                                    │   │                                   │   │   ├── TM
+                                    │   │                                   │   │   │   ├── ALPHANUM
+                                    │   │                                   │   │   │   │   └── tb1-31
+                                    │   │                                   │   │   │   └── TM1
+                                    │   │                                   │   │   │       └── ε
+                                    │   │                                   │   │   └── BLCC
+                                    │   │                                   │   │       └── }
+                                    │   │                                   │   └── TM1
+                                    │   │                                   │       └── ε
+                                    │   │                                   ├── BLCC
+                                    │   │                                   │   └── }
+                                    │   │                                   └── ITEML1
+                                    │   │                                       ├── ,
+                                    │   │                                       └── ITEML
+                                    │   │                                           ├── BLCO
+                                    │   │                                           │   └── {
+                                    │   │                                           ├── TM
+                                    │   │                                           │   ├── ALPHANUM
+                                    │   │                                           │   │   └── tb1-32
+                                    │   │                                           │   └── TM1
+                                    │   │                                           │       └── ε
+                                    │   │                                           ├── BLCC
+                                    │   │                                           │   └── }
+                                    │   │                                           └── ITEML1
+                                    │   │                                               ├── ,
+                                    │   │                                               └── ITEML
+                                    │   │                                                   ├── BLCO
+                                    │   │                                                   │   └── {
+                                    │   │                                                   ├── TM
+                                    │   │                                                   │   ├── ALPHANUM
+                                    │   │                                                   │   │   └── tb1-41
+                                    │   │                                                   │   └── TM1
+                                    │   │                                                   │       └── ε
+                                    │   │                                                   ├── BLCC
+                                    │   │                                                   │   └── }
+                                    │   │                                                   └── ITEML1
+                                    │   │                                                       ├── ,
+                                    │   │                                                       └── ITEML
+                                    │   │                                                           ├── BLCO
+                                    │   │                                                           │   └── {
+                                    │   │                                                           ├── TM
+                                    │   │                                                           │   ├── ALPHANUM
+                                    │   │                                                           │   │   └── tb1-42
+                                    │   │                                                           │   └── TM1
+                                    │   │                                                           │       └── ε
+                                    │   │                                                           ├── BLCC
+                                    │   │                                                           │   └── }
+                                    │   │                                                           └── ITEML1
+                                    │   │                                                               └── ε
+                                    │   └── BLCC
+                                    │       └── }
+                                    └── C
+                                        ├── NL
+                                        │   └── /n
+                                        └── C
+                                            ├── TEXT
+                                            │   ├── /url
+                                            │   ├── BLCO
+                                            │   │   └── {
+                                            │   ├── TM
+                                            │   │   ├── ALPHANUM
+                                            │   │   │   └── https:
+                                            │   │   └── TM1
+                                            │   │       └── TM
+                                            │   │           ├── ALPHANUM
+                                            │   │           │   └── /
+                                            │   │           └── TM1
+                                            │   │               └── TM
+                                            │   │                   ├── ALPHANUM
+                                            │   │                   │   └── /www.google.com.pe
+                                            │   │                   └── TM1
+                                            │   │                       └── TM
+                                            │   │                           ├── ALPHANUM
+                                            │   │                           │   └── /?hl=es
+                                            │   │                           └── TM1
+                                            │   │                               └── ε
+                                            │   └── BLCC
+                                            │       └── }
+                                            └── C
+                                                ├── NL
+                                                │   └── /n
+                                                └── C
+                                                    ├── TEXT
+                                                    │   ├── /t2
+                                                    │   ├── BLCO
+                                                    │   │   └── {
+                                                    │   ├── TM
+                                                    │   │   ├── ALPHANUM
+                                                    │   │   │   └── Ejemplo titulo2
+                                                    │   │   └── TM1
+                                                    │   │       └── ε
+                                                    │   └── BLCC
+                                                    │       └── }
+                                                    └── C
+                                                        ├── TEXT
+                                                        │   ├── /p
+                                                        │   ├── BLCO
+                                                        │   │   └── {
+                                                        │   ├── TM
+                                                        │   │   ├── ALPHANUM
+                                                        │   │   │   └── Esto es un ejemplo de parrafo muy largo, It is a 
+                                                        │   │   └── TM1
+                                                        │   │       └── TM
+                                                        │   │           ├── STEXT
+                                                        │   │           │   ├── /u
+                                                        │   │           │   ├── BLCO
+                                                        │   │           │   │   └── {
+                                                        │   │           │   ├── TM
+                                                        │   │           │   │   ├── ALPHANUM
+                                                        │   │           │   │   │   └── long established fact that a reader will be
+                                                        │   │           │   │   └── TM1
+                                                        │   │           │   │       └── ε
+                                                        │   │           │   └── BLCC
+                                                        │   │           │       └── }
+                                                        │   │           └── TM1
+                                                        │   │               └── TM
+                                                        │   │                   ├── ALPHANUM
+                                                        │   │                   │   └── distracted by the readable content of a 
+                                                        │   │                   └── TM1
+                                                        │   │                       └── TM
+                                                        │   │                           ├── STEXT
+                                                        │   │                           │   ├── /b
+                                                        │   │                           │   ├── BLCO
+                                                        │   │                           │   │   └── {
+                                                        │   │                           │   ├── TM
+                                                        │   │                           │   │   ├── STEXT
+                                                        │   │                           │   │   │   ├── /u
+                                                        │   │                           │   │   │   ├── BLCO
+                                                        │   │                           │   │   │   │   └── {
+                                                        │   │                           │   │   │   ├── TM
+                                                        │   │                           │   │   │   │   ├── ALPHANUM
+                                                        │   │                           │   │   │   │   │   └── page when looking at its layout
+                                                        │   │                           │   │   │   │   └── TM1
+                                                        │   │                           │   │   │   │       └── ε
+                                                        │   │                           │   │   │   └── BLCC
+                                                        │   │                           │   │   │       └── }
+                                                        │   │                           │   │   └── TM1
+                                                        │   │                           │   │       └── TM
+                                                        │   │                           │   └── BLCC
+                                                        │   │                           │       └── }
+                                                        │   │                           └── TM1
+                                                        │   │                               └── TM
+                                                        │   │                                   ├── TM1
+                                                        │   │                                   │   ├── TM
+                                                        │   │                                   │   │   ├── STEXT
+                                                        │   │                                   │   │   │   ├── /b
+                                                        │   │                                   │   │   │   ├── BLCO
+                                                        │   │                                   │   │   │   │   └── {
+                                                        │   │                                   │   │   │   ├── TM
+                                                        │   │                                   │   │   │   │   ├── ALPHANUM
+                                                        │   │                                   │   │   │   │   │   └── using 
+                                                        │   │                                   │   │   │   │   └── TM1
+                                                        │   │                                   │   │   │   │       └── TM
+                                                        │   │                                   │   │   │   │           ├── STEXT
+                                                        │   │                                   │   │   │   │           │   ├── /i
+                                                        │   │                                   │   │   │   │           │   ├── BLCO
+                                                        │   │                                   │   │   │   │           │   │   └── {
+                                                        │   │                                   │   │   │   │           │   ├── TM
+                                                        │   │                                   │   │   │   │           │   │   ├── ALPHANUM
+                                                        │   │                                   │   │   │   │           │   │   │   └── Lorem 
+                                                        │   │                                   │   │   │   │           │   │   └── TM1
+                                                        │   │                                   │   │   │   │           │   │       └── TM
+                                                        │   │                                   │   │   │   │           │   │           ├── STEXT
+                                                        │   │                                   │   │   │   │           │   │           │   ├── /u
+                                                        │   │                                   │   │   │   │           │   │           │   ├── BLCO
+                                                        │   │                                   │   │   │   │           │   │           │   │   └── {
+                                                        │   │                                   │   │   │   │           │   │           │   ├── TM
+                                                        │   │                                   │   │   │   │           │   │           │   │   ├── ALPHANUM
+                                                        │   │                                   │   │   │   │           │   │           │   │   │   └── Ipsum
+                                                        │   │                                   │   │   │   │           │   │           │   │   └── TM1
+                                                        │   │                                   │   │   │   │           │   │           │   │       └── ε
+                                                        │   │                                   │   │   │   │           │   │           │   └── BLCC
+                                                        │   │                                   │   │   │   │           │   │           │       └── }
+                                                        │   │                                   │   │   │   │           │   │           └── TM1
+                                                        │   │                                   │   │   │   │           │   │               └── TM
+                                                        │   │                                   │   │   │   │           │   └── BLCC
+                                                        │   │                                   │   │   │   │           │       └── }
+                                                        │   │                                   │   │   │   │           └── TM1
+                                                        │   │                                   │   │   │   │               └── TM
+                                                        │   │                                   │   │   │   └── BLCC
+                                                        │   │                                   │   │   │       └── }
+                                                        │   │                                   │   │   └── TM1
+                                                        │   │                                   │   │       └── TM
+                                                        │   │                                   │   │           ├── ALPHANUM
+                                                        │   │                                   │   │           │   ├── it has a more-or-less normal distribution of letters, as opposed to using Content here content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                                        │   │                                   │   │           │   └── that
+                                                        │   │                                   │   │           ├── ALPHANUM
+                                                        │   │                                   │   │           │   └── is
+                                                        │   │                                   │   │           ├── TM1
+                                                        │   │                                   │   │           │   └── ε
+                                                        │   │                                   │   │           ├── ALPHANUM
+                                                        │   │                                   │   │           ├── TM1
+                                                        │   │                                   │   │           │   ├── ε
+                                                        │   │                                   │   │           │   └── ε
+                                                        │   │                                   │   │           └── TM1
+                                                        │   │                                   │   └── ε
+                                                        │   │                                   ├── ALPHANUM
+                                                        │   │                                   │   └── . The point of 
+                                                        │   │                                   ├── ALPHANUM
+                                                        │   │                                   │   └── tc
+                                                        │   │                                   └── TM1
+                                                        │   └── BLCC
+                                                        │       └── }
+                                                        └── C
+                                                            ├── TEXT
+                                                            │   ├── /t3
+                                                            │   ├── BLCO
+                                                            │   │   └── {
+                                                            │   ├── TM
+                                                            │   │   ├── ALPHANUM
+                                                            │   │   │   └── Ejemplo titulo3
+                                                            │   │   └── TM1
+                                                            │   │       └── ε
+                                                            │   └── BLCC
+                                                            │       └── }
+                                                            └── C
+                                                                ├── TEXT
+                                                                │   ├── /img
+                                                                │   ├── BLCO
+                                                                │   │   └── {
+                                                                │   ├── TM
+                                                                │   │   ├── ALPHANUM
+                                                                │   │   │   └── https:
+                                                                │   │   └── TM1
+                                                                │   │       └── TM
+                                                                │   │           ├── ALPHANUM
+                                                                │   │           │   └── /
+                                                                │   │           └── TM1
+                                                                │   │               └── TM
+                                                                │   │                   ├── ALPHANUM
+                                                                │   │                   │   └── /previews.123rf.com
+                                                                │   │                   └── TM1
+                                                                │   │                       └── TM
+                                                                │   │                           ├── ALPHANUM
+                                                                │   │                           │   └── /images
+                                                                │   │                           └── TM1
+                                                                │   │                               └── TM
+                                                                │   │                                   ├── ALPHANUM
+                                                                │   │                                   │   └── /bsd555
+                                                                │   │                                   └── TM1
+                                                                │   │                                       └── TM
+                                                                │   │                                           ├── ALPHANUM
+                                                                │   │                                           │   └── /bsd5551910
+                                                                │   │                                           └── TM1
+                                                                │   │                                               └── TM
+                                                                │   │                                                   ├── ALPHANUM
+                                                                │   │                                                   │   └── /bsd555191000325
+                                                                │   │                                                   └── TM1
+                                                                │   │                                                       └── TM
+                                                                │   │                                                           ├── ALPHANUM
+                                                                │   │                                                           │   └── /131290564-icono-del-concepto-de-compilador-desarrollo-de-software-lenguaje-de-m%C3%A1quina-programaci%C3%B3n.jpg
+                                                                │   │                                                           └── TM1
+                                                                │   │                                                               └── ε
+                                                                │   └── BLCC
+                                                                │       └── }
+                                                                └── C
+                                                                    ├── NL
+                                                                    │   └── /n
+                                                                    └── C
+                                                                        ├── LIST
+                                                                        │   ├── /l
+                                                                        │   ├── BLCO
+                                                                        │   │   └── {
+                                                                        │   ├── ITEML
+                                                                        │   │   ├── BLCO
+                                                                        │   │   │   └── {
+                                                                        │   │   ├── TM
+                                                                        │   │   │   ├── ALPHANUM
+                                                                        │   │   │   │   └── ejemplo lista
+                                                                        │   │   │   └── TM1
+                                                                        │   │   │       └── ε
+                                                                        │   │   ├── BLCC
+                                                                        │   │   │   └── }
+                                                                        │   │   └── ITEML1
+                                                                        │   │       ├── ,
+                                                                        │   │       └── ITEML
+                                                                        │   │           ├── BLCO
+                                                                        │   │           │   └── {
+                                                                        │   │           ├── TM
+                                                                        │   │           │   ├── STEXT
+                                                                        │   │           │   │   ├── /b
+                                                                        │   │           │   │   ├── BLCO
+                                                                        │   │           │   │   │   └── {
+                                                                        │   │           │   │   ├── TM
+                                                                        │   │           │   │   │   ├── ALPHANUM
+                                                                        │   │           │   │   │   │   └── ejemplo lista(bold)
+                                                                        │   │           │   │   │   └── TM1
+                                                                        │   │           │   │   │       └── ε
+                                                                        │   │           │   │   └── BLCC
+                                                                        │   │           │   │       └── }
+                                                                        │   │           │   └── TM1
+                                                                        │   │           │       └── ε
+                                                                        │   │           ├── BLCC
+                                                                        │   │           │   └── }
+                                                                        │   │           └── ITEML1
+                                                                        │   │               ├── ,
+                                                                        │   │               └── ITEML
+                                                                        │   │                   ├── BLCO
+                                                                        │   │                   │   └── {
+                                                                        │   │                   ├── TM
+                                                                        │   │                   │   ├── STEXT
+                                                                        │   │                   │   │   ├── /u
+                                                                        │   │                   │   │   ├── BLCO
+                                                                        │   │                   │   │   │   └── {
+                                                                        │   │                   │   │   ├── TM
+                                                                        │   │                   │   │   │   ├── ALPHANUM
+                                                                        │   │                   │   │   │   │   └── ejemplo lista(underline)
+                                                                        │   │                   │   │   │   └── TM1
+                                                                        │   │                   │   │   │       └── ε
+                                                                        │   │                   │   │   └── BLCC
+                                                                        │   │                   │   │       └── }
+                                                                        │   │                   │   └── TM1
+                                                                        │   │                   │       └── ε
+                                                                        │   │                   ├── BLCC
+                                                                        │   │                   │   └── }
+                                                                        │   │                   └── ITEML1
+                                                                        │   │                       └── ε
+                                                                        │   └── BLCC
+                                                                        │       └── }
+                                                                        └── C
+                                                                            ├── NL
+                                                                            │   └── /n
+                                                                            └── C
+                                                                                ├── TB
+                                                                                │   ├── /tb
+                                                                                │   ├── BTO
+                                                                                │   │   └── [
+                                                                                │   ├── TBZ
+                                                                                │   │   ├── PO
+                                                                                │   │   │   └── (
+                                                                                │   │   ├── DIGIT
+                                                                                │   │   │   └──  2 
+                                                                                │   │   ├── ,
+                                                                                │   │   ├── DIGIT
+                                                                                │   │   │   └──  3 
+                                                                                │   │   └── PC
+                                                                                │   │       └── )
+                                                                                │   ├── BTC
+                                                                                │   │   └── ]
+                                                                                │   ├── BLCO
+                                                                                │   │   └── {
+                                                                                │   ├── ITEML
+                                                                                │   │   ├── BLCO
+                                                                                │   │   │   └── {
+                                                                                │   │   ├── TM
+                                                                                │   │   │   ├── STEXT
+                                                                                │   │   │   │   ├── /b
+                                                                                │   │   │   │   ├── BLCO
+                                                                                │   │   │   │   │   └── {
+                                                                                │   │   │   │   ├── TM
+                                                                                │   │   │   │   │   ├── ALPHANUM
+                                                                                │   │   │   │   │   │   └── tb2 TB B
+                                                                                │   │   │   │   │   └── TM1
+                                                                                │   │   │   │   │       └── ε
+                                                                                │   │   │   │   └── BLCC
+                                                                                │   │   │   │       └── }
+                                                                                │   │   │   └── TM1
+                                                                                │   │   │       └── ε
+                                                                                │   │   ├── BLCC
+                                                                                │   │   │   └── }
+                                                                                │   │   └── ITEML1
+                                                                                │   │       ├── ,
+                                                                                │   │       └── ITEML
+                                                                                │   │           ├── BLCO
+                                                                                │   │           │   └── {
+                                                                                │   │           ├── TM
+                                                                                │   │           │   ├── ALPHANUM
+                                                                                │   │           │   │   └── a2
+                                                                                │   │           │   └── TM1
+                                                                                │   │           │       └── ε
+                                                                                │   │           ├── BLCC
+                                                                                │   │           │   └── }
+                                                                                │   │           └── ITEML1
+                                                                                │   │               ├── ,
+                                                                                │   │               └── ITEML
+                                                                                │   │                   ├── BLCO
+                                                                                │   │                   │   └── {
+                                                                                │   │                   ├── TM
+                                                                                │   │                   │   ├── STEXT
+                                                                                │   │                   │   │   ├── /u
+                                                                                │   │                   │   │   ├── BLCO
+                                                                                │   │                   │   │   │   └── {
+                                                                                │   │                   │   │   ├── TM
+                                                                                │   │                   │   │   │   ├── ALPHANUM
+                                                                                │   │                   │   │   │   │   └── tb2 TB U
+                                                                                │   │                   │   │   │   └── TM1
+                                                                                │   │                   │   │   │       └── ε
+                                                                                │   │                   │   │   └── BLCC
+                                                                                │   │                   │   │       └── }
+                                                                                │   │                   │   └── TM1
+                                                                                │   │                   │       └── ε
+                                                                                │   │                   ├── BLCC
+                                                                                │   │                   │   └── }
+                                                                                │   │                   └── ITEML1
+                                                                                │   │                       ├── ,
+                                                                                │   │                       └── ITEML
+                                                                                │   │                           ├── BLCO
+                                                                                │   │                           │   └── {
+                                                                                │   │                           ├── TM
+                                                                                │   │                           │   ├── ALPHANUM
+                                                                                │   │                           │   │   └── a2 a
+                                                                                │   │                           │   └── TM1
+                                                                                │   │                           │       └── ε
+                                                                                │   │                           ├── BLCC
+                                                                                │   │                           │   └── }
+                                                                                │   │                           └── ITEML1
+                                                                                │   │                               ├── ,
+                                                                                │   │                               └── ITEML
+                                                                                │   │                                   ├── BLCO
+                                                                                │   │                                   │   └── {
+                                                                                │   │                                   ├── TM
+                                                                                │   │                                   │   ├── STEXT
+                                                                                │   │                                   │   │   ├── /i
+                                                                                │   │                                   │   │   ├── BLCO
+                                                                                │   │                                   │   │   │   └── {
+                                                                                │   │                                   │   │   ├── TM
+                                                                                │   │                                   │   │   │   ├── ALPHANUM
+                                                                                │   │                                   │   │   │   │   └── tb2 TB I
+                                                                                │   │                                   │   │   │   └── TM1
+                                                                                │   │                                   │   │   │       └── ε
+                                                                                │   │                                   │   │   └── BLCC
+                                                                                │   │                                   │   │       └── }
+                                                                                │   │                                   │   └── TM1
+                                                                                │   │                                   │       └── ε
+                                                                                │   │                                   ├── BLCC
+                                                                                │   │                                   │   └── }
+                                                                                │   │                                   └── ITEML1
+                                                                                │   │                                       ├── ,
+                                                                                │   │                                       └── ITEML
+                                                                                │   │                                           ├── BLCO
+                                                                                │   │                                           │   └── {
+                                                                                │   │                                           ├── TM
+                                                                                │   │                                           │   ├── STEXT
+                                                                                │   │                                           │   │   ├── /b
+                                                                                │   │                                           │   │   ├── BLCO
+                                                                                │   │                                           │   │   │   └── {
+                                                                                │   │                                           │   │   ├── TM
+                                                                                │   │                                           │   │   │   ├── ALPHANUM
+                                                                                │   │                                           │   │   │   │   └── a2
+                                                                                │   │                                           │   │   │   └── TM1
+                                                                                │   │                                           │   │   │       └── ε
+                                                                                │   │                                           │   │   └── BLCC
+                                                                                │   │                                           │   │       └── }
+                                                                                │   │                                           │   └── TM1
+                                                                                │   │                                           │       └── ε
+                                                                                │   │                                           ├── BLCC
+                                                                                │   │                                           │   └── }
+                                                                                │   │                                           └── ITEML1
+                                                                                │   │                                               └── ε
+                                                                                │   └── BLCC
+                                                                                │       └── }
+                                                                                └── C
+                                                                                    ├── NL
+                                                                                    │   └── /n
+                                                                                    └── C
+                                                                                        ├── NLIST
+                                                                                        │   ├── /sl
+                                                                                        │   ├── BLCO
+                                                                                        │   │   └── {
+                                                                                        │   ├── ITEML
+                                                                                        │   │   ├── BLCO
+                                                                                        │   │   │   └── {
+                                                                                        │   │   ├── TM
+                                                                                        │   │   │   ├── STEXT
+                                                                                        │   │   │   │   ├── /u
+                                                                                        │   │   │   │   ├── BLCO
+                                                                                        │   │   │   │   │   └── {
+                                                                                        │   │   │   │   ├── TM
+                                                                                        │   │   │   │   │   ├── ALPHANUM
+                                                                                        │   │   │   │   │   │   └── ejemplo sl1
+                                                                                        │   │   │   │   │   └── TM1
+                                                                                        │   │   │   │   │       └── ε
+                                                                                        │   │   │   │   └── BLCC
+                                                                                        │   │   │   │       └── }
+                                                                                        │   │   │   └── TM1
+                                                                                        │   │   │       └── ε
+                                                                                        │   │   ├── BLCC
+                                                                                        │   │   │   └── }
+                                                                                        │   │   └── ITEML1
+                                                                                        │   │       ├── ,
+                                                                                        │   │       └── ITEML
+                                                                                        │   │           ├── BLCO
+                                                                                        │   │           │   └── {
+                                                                                        │   │           ├── TM
+                                                                                        │   │           │   ├── ALPHANUM
+                                                                                        │   │           │   │   └── aa
+                                                                                        │   │           │   └── TM1
+                                                                                        │   │           │       └── ε
+                                                                                        │   │           ├── BLCC
+                                                                                        │   │           │   └── }
+                                                                                        │   │           └── ITEML1
+                                                                                        │   │               └── ε
+                                                                                        │   └── BLCC
+                                                                                        │       └── }
+                                                                                        └── C
+                                                                                            ├── NL
+                                                                                            │   └── /n
+                                                                                            └── C
+                                                                                                └── ε
+==========================================================================================================================================================================================
+==========================================================================================================================================================================================
+
+    ╦ ╦╔╦╗╔╦╗╦    ╔╦╗╦═╗╔═╗╔╗╔╔═╗╦  ╔═╗╔╦╗╦╔═╗╔╗╔
+    ╠═╣ ║ ║║║║     ║ ╠╦╝╠═╣║║║╚═╗║  ╠═╣ ║ ║║ ║║║║
+    ╩ ╩ ╩ ╩ ╩╩═╝   ╩ ╩╚═╩ ╩╝╚╝╚═╝╩═╝╩ ╩ ╩ ╩╚═╝╝╚╝
+==========================================================================================================================================================================================
+<h1>Ejemplo TITULO 1</h1><b>Ejemplo texto en (bold)</b><br><i>Ejemplo texto en (italic)</i><br><u>Ejemplo texto en  (underline)</u><br><p>Esto es un <b>Ejemplo N </b>de parrafo de texto con palabras con estilos en <i>nuestro BI </i><u>lenguaje U</u></p><table><tr><td><b>tb1-11</b></td><td><b>tb1-12</b></td></tr>
+<tr><td><u>tb1-21</u></td><td>tb1-22</td></tr>
+<tr><td><i>tb1-31</i></td><td>tb1-32</td></tr>
+<tr><td>tb1-41</td><td>tb1-42</td></tr>
+</table><br><a href='https://www.google.com.pe/?hl=es'>https://www.google.com.pe/?hl=es</a><br><h2>Ejemplo titulo2</h2><p>Esto es un ejemplo de parrafo muy largo, It is a <u>long established fact that a reader will be</u>distracted by the readable content of a <b><u>page when looking at its layout</u></b><b>using <i>Lorem <u>Ipsum</u></i></b>it has a more-or-less normal distribution of letters, as opposed to using Content here content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).thatis. The point of tc</p><h3>Ejemplo titulo3</h3><img src="https://previews.123rf.com/images/bsd555/bsd5551910/bsd555191000325/131290564-icono-del-concepto-de-compilador-desarrollo-de-software-lenguaje-de-m%C3%A1quina-programaci%C3%B3n.jpg" /><br><ul><li>ejemplo lista</li><li><b>ejemplo lista(bold)</b></li><li><u>ejemplo lista(underline)</u></li></ul><br><table><tr><td><b>tb2 TB B</b></td><td>a2</td><td><u>tb2 TB U</u></td></tr>
+<tr><td>a2 a</td><td><i>tb2 TB I</i></td><td><b>a2</b></td></tr>
+</table><br><ol><li><u>ejemplo sl1</u></li><li>aa</li></ol><br>
+==========================================================================================================================================================================================
