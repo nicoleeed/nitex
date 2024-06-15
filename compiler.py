@@ -4,7 +4,7 @@ from tabulate import tabulate
 import re
 import pdfkit
 
-input_code = open('tests/test3.txt').read()
+input_code = open('tests/test1.txt').read()
 grammar_file_path = 'grammar/LL1Grammar.txt'
 table_file_path = 'table/table.txt'
 terminals_file_path = 'grammar/terminals.txt'
